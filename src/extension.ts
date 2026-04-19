@@ -9,6 +9,7 @@ import {
 	type DependencyCheckProfile,
 	type DependencyCheckStatus,
 } from './doctor/dependencyDoctor';
+import { registerTestbenchController } from './testbench/testbenchController';
 
 export function activate(context: vscode.ExtensionContext) {
 	const outputChannel = vscode.window.createOutputChannel('HDL Dev');
@@ -24,6 +25,7 @@ export function activate(context: vscode.ExtensionContext) {
 	};
 
 	statusSink.setStatus(createUnknownDependencyStatus());
+	registerTestbenchController(context, outputChannel);
 
 	const runDoctorCommand = async (profile: DependencyCheckProfile): Promise<void> => {
 		const configuration = vscode.workspace.getConfiguration('hdlDev');
