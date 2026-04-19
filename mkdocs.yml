@@ -17,7 +17,7 @@ nav:
       - GEnCor: integrations/gencor.md
   - Workflows:
       - v0.1 Project Discovery And Dependency Doctor: workflows/v0.1-project-discovery-and-doctor.md
-      - v0.2 Testbench Discovery: workflows/v0.2-testbench-discovery.md
+      - v0.2 Native Testbench Runner: workflows/v0.2-testbench-discovery.md
   - Design:
       - Project Discovery: design/project-discovery.md
       - Initial Extension Design: design/initial-extension-design.md

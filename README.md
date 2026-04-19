@@ -3,7 +3,8 @@
 HDL Dev is a VS Code extension for coordinating HDL project workflows from
 inside the editor. The project is currently an early TypeScript extension with
 passive HDL project discovery, dependency-check commands, testbench discovery,
-documentation, CI, and GitHub Pages infrastructure in place.
+testbench run support, documentation, CI, and GitHub Pages infrastructure in
+place.
 
 The design direction is to keep HDL project scripts as the source of truth and
 wrap them with native VS Code surfaces: commands, Output channels, the Testing
@@ -12,7 +13,8 @@ API, tree views, status items, and focused artifact previews.
 ## Features
 
 Current shipped extension behavior covers the v0.1 Project Discovery and
-Dependency Doctor milestone plus the first v0.2 testbench discovery slice.
+Dependency Doctor milestone plus the v0.2 native testbench discovery and run
+implementation slices.
 
 Feature status:
 
@@ -29,7 +31,7 @@ Feature status:
 - [x] Dependency Doctor commands and Output channel
 - [x] dependency status bar item
 - [x] VS Code Testing API testbench discovery
-- [ ] VS Code Testing API testbench run support
+- [x] VS Code Testing API testbench run support
 - [ ] waveform spec tree and SVG generation commands
 - [ ] schematic spec tree and SVG generation commands
 - [ ] generated artifact explorer
@@ -43,10 +45,13 @@ Shipped command names use the `HDL Dev` prefix:
 - `HDL Dev: Check GHDL Dependencies`
 - `HDL Dev: Check Documentation Asset Dependencies`
 
+Shipped Testing API surface:
+
+- `HDL Dev Testbenches` test controller
+- `Run Testbench` run profile
+
 Planned command names:
 
-- `HDL Dev: List Testbenches`
-- `HDL Dev: Run Testbench`
 - `HDL Dev: Generate Waveform SVG`
 - `HDL Dev: Generate Schematic SVG`
 - `HDL Dev: Open Latest Artifact`
@@ -91,12 +96,9 @@ HDL Dev contributes these settings:
 - `hdlDev.projectRoots`: optional explicit project roots
 - `hdlDev.depsScript`: optional path to `scripts/deps.sh`
 - `hdlDev.makeExecutable`: make executable path, defaulting to `make`
+- `hdlDev.defaultStopTime`: default `STOP_TIME` for GHDL testbench runs
+- `hdlDev.defaultWaveFormat`: default `WAVE_FORMAT` for GHDL testbench runs
 - `hdlDev.toolchainRoot`: optional `GHDL_TOOLCHAIN_ROOT`
-
-Planned settings:
-
-- `hdlDev.defaultStopTime`: default GHDL stop time, for example `500us`
-- `hdlDev.defaultWaveFormat`: default wave format, initially `ghw`
 
 ## Repository Workflow
 
@@ -149,8 +151,9 @@ generation.
 - Dependency Doctor uses coarse pass/fail process status and human-readable
   shell output; JSON output is planned for more reliable extension integration.
 - Dependency Doctor commands are blocked until the workspace is trusted.
-- Testbench running, spec trees, artifact navigation, previews, schemas, and
-  packetized-I/O debug helpers are planned but not implemented yet.
+- Testbench result status is currently based on Make process exit status.
+- Spec trees, artifact navigation, previews, schemas, and packetized-I/O debug
+  helpers are planned but not implemented yet.
 - Waveform and schematic generation are documented as design targets but are not
   implemented in the extension yet.
 
@@ -164,6 +167,7 @@ Initial scaffold and project infrastructure:
 - repo-owned dependency scripts and Make targets
 - passive HDL project discovery
 - Dependency Doctor commands, Output channel, and status item
+- VS Code Testing API discovery and Make-backed testbench runs
 - cached GHDL Doctor smoke workflow
 - git-flow branch model
 - MkDocs GitHub Pages deployment
@@ -175,7 +179,7 @@ Design notes live under `docs/` and are published through MkDocs:
 - [VS Code Workbench References](docs/references/vscode-workbench-surfaces.md)
 - [GEnCor Integration Notes](docs/integrations/gencor.md)
 - [v0.1 Project Discovery And Dependency Doctor](docs/workflows/v0.1-project-discovery-and-doctor.md)
-- [v0.2 Testbench Discovery](docs/workflows/v0.2-testbench-discovery.md)
+- [v0.2 Native Testbench Runner](docs/workflows/v0.2-testbench-discovery.md)
 - [Project Discovery](docs/design/project-discovery.md)
 - [Initial Extension Design](docs/design/initial-extension-design.md)
 - [MVP Roadmap](docs/design/mvp-roadmap.md)

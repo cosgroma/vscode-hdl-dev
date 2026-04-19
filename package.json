@@ -49,6 +49,21 @@
           "default": "make",
           "description": "Make executable used for HDL project testbench discovery and runs."
         },
+        "hdlDev.defaultStopTime": {
+          "type": "string",
+          "default": "500us",
+          "description": "Default STOP_TIME value passed to Make-backed GHDL testbench runs."
+        },
+        "hdlDev.defaultWaveFormat": {
+          "type": "string",
+          "enum": [
+            "ghw",
+            "fst",
+            "vcd"
+          ],
+          "default": "ghw",
+          "description": "Default WAVE_FORMAT value passed to Make-backed GHDL testbench runs."
+        },
         "hdlDev.toolchainRoot": {
           "type": "string",
           "default": "",
