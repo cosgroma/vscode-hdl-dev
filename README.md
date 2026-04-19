@@ -14,7 +14,8 @@ API, tree views, status items, and focused artifact previews.
 
 Current shipped extension behavior covers the v0.1 Project Discovery and
 Dependency Doctor milestone, the v0.2 native testbench discovery and run
-implementation slices, and the first v0.3 Specs tree slice.
+implementation slices, and the first v0.3 Specs tree and SVG generation
+slices.
 
 Feature status:
 
@@ -34,8 +35,8 @@ Feature status:
 - [x] VS Code Testing API testbench run support
 - [x] HDL Activity Bar view container
 - [x] waveform and schematic Specs tree
-- [ ] waveform SVG generation commands
-- [ ] schematic SVG generation commands
+- [x] waveform SVG generation commands
+- [x] schematic SVG generation commands
 - [ ] generated artifact explorer
 - [ ] waveform and schematic JSON schemas
 - [ ] `ghwdump -H` signal picker for waveform specs
@@ -45,6 +46,9 @@ Feature status:
 Shipped command names use the `HDL Dev` prefix:
 
 - `HDL Dev: Refresh Specs`
+- `HDL Dev: Generate Waveform SVG`
+- `HDL Dev: Generate Waveform SVG Without Rerun`
+- `HDL Dev: Generate Schematic SVG`
 - `HDL Dev: Check GHDL Dependencies`
 - `HDL Dev: Check Documentation Asset Dependencies`
 
@@ -55,8 +59,6 @@ Shipped Testing API surface:
 
 Planned command names:
 
-- `HDL Dev: Generate Waveform SVG`
-- `HDL Dev: Generate Schematic SVG`
 - `HDL Dev: Open Latest Artifact`
 
 ## Requirements
@@ -155,9 +157,10 @@ generation.
   shell output; JSON output is planned for more reliable extension integration.
 - Dependency Doctor commands are blocked until the workspace is trusted.
 - Testbench result status is currently based on Make process exit status.
-- Spec schema validation, generation commands, artifact navigation, previews,
-  and packetized-I/O debug helpers are planned but not implemented yet.
-- Waveform and schematic generation remain documented design targets.
+- Spec schema validation, artifact navigation, previews, and packetized-I/O
+  debug helpers are planned but not implemented yet.
+- Waveform and schematic generation status is based on Make process exit status
+  plus a generated-SVG existence check.
 
 ## Release Notes
 

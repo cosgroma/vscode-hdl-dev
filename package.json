@@ -12,6 +12,9 @@
   "activationEvents": [
     "onStartupFinished",
     "onView:vscode-hdl-dev.specs",
+    "onCommand:vscode-hdl-dev.generateWaveformSvg",
+    "onCommand:vscode-hdl-dev.generateWaveformSvgNoRun",
+    "onCommand:vscode-hdl-dev.generateSchematicSvg",
     "onCommand:vscode-hdl-dev.refreshSpecs",
     "onCommand:vscode-hdl-dev.checkGhdlDependencies",
     "onCommand:vscode-hdl-dev.checkDocsAssetDependencies"
@@ -19,6 +22,21 @@
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
+      {
+        "command": "vscode-hdl-dev.generateWaveformSvg",
+        "title": "Generate Waveform SVG",
+        "category": "HDL Dev"
+      },
+      {
+        "command": "vscode-hdl-dev.generateWaveformSvgNoRun",
+        "title": "Generate Waveform SVG Without Rerun",
+        "category": "HDL Dev"
+      },
+      {
+        "command": "vscode-hdl-dev.generateSchematicSvg",
+        "title": "Generate Schematic SVG",
+        "category": "HDL Dev"
+      },
       {
         "command": "vscode-hdl-dev.refreshSpecs",
         "title": "Refresh Specs",
@@ -102,6 +120,23 @@
           "command": "vscode-hdl-dev.refreshSpecs",
           "when": "view == vscode-hdl-dev.specs",
           "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "vscode-hdl-dev.generateWaveformSvg",
+          "when": "view == vscode-hdl-dev.specs && viewItem == hdlDev.specs.spec.waveform.valid",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vscode-hdl-dev.generateWaveformSvgNoRun",
+          "when": "view == vscode-hdl-dev.specs && viewItem == hdlDev.specs.spec.waveform.valid",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vscode-hdl-dev.generateSchematicSvg",
+          "when": "view == vscode-hdl-dev.specs && viewItem == hdlDev.specs.spec.schematic.valid",
+          "group": "navigation@1"
         }
       ]
     }
