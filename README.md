@@ -3,8 +3,8 @@
 HDL Dev is a VS Code extension for coordinating HDL project workflows from
 inside the editor. The project is currently an early TypeScript extension with
 passive HDL project discovery, dependency-check commands, testbench discovery,
-testbench run support, documentation, CI, and GitHub Pages infrastructure in
-place.
+testbench run support, Specs tree navigation, documentation, CI, and GitHub
+Pages infrastructure in place.
 
 The design direction is to keep HDL project scripts as the source of truth and
 wrap them with native VS Code surfaces: commands, Output channels, the Testing
@@ -13,8 +13,8 @@ API, tree views, status items, and focused artifact previews.
 ## Features
 
 Current shipped extension behavior covers the v0.1 Project Discovery and
-Dependency Doctor milestone plus the v0.2 native testbench discovery and run
-implementation slices.
+Dependency Doctor milestone, the v0.2 native testbench discovery and run
+implementation slices, and the first v0.3 Specs tree slice.
 
 Feature status:
 
@@ -32,8 +32,10 @@ Feature status:
 - [x] dependency status bar item
 - [x] VS Code Testing API testbench discovery
 - [x] VS Code Testing API testbench run support
-- [ ] waveform spec tree and SVG generation commands
-- [ ] schematic spec tree and SVG generation commands
+- [x] HDL Activity Bar view container
+- [x] waveform and schematic Specs tree
+- [ ] waveform SVG generation commands
+- [ ] schematic SVG generation commands
 - [ ] generated artifact explorer
 - [ ] waveform and schematic JSON schemas
 - [ ] `ghwdump -H` signal picker for waveform specs
@@ -42,6 +44,7 @@ Feature status:
 
 Shipped command names use the `HDL Dev` prefix:
 
+- `HDL Dev: Refresh Specs`
 - `HDL Dev: Check GHDL Dependencies`
 - `HDL Dev: Check Documentation Asset Dependencies`
 
@@ -152,10 +155,9 @@ generation.
   shell output; JSON output is planned for more reliable extension integration.
 - Dependency Doctor commands are blocked until the workspace is trusted.
 - Testbench result status is currently based on Make process exit status.
-- Spec trees, artifact navigation, previews, schemas, and packetized-I/O debug
-  helpers are planned but not implemented yet.
-- Waveform and schematic generation are documented as design targets but are not
-  implemented in the extension yet.
+- Spec schema validation, generation commands, artifact navigation, previews,
+  and packetized-I/O debug helpers are planned but not implemented yet.
+- Waveform and schematic generation remain documented design targets.
 
 ## Release Notes
 
@@ -181,6 +183,7 @@ Design notes live under `docs/` and are published through MkDocs:
 - [v0.1 Project Discovery And Dependency Doctor](docs/workflows/v0.1-project-discovery-and-doctor.md)
 - [v0.2 Native Testbench Runner](docs/workflows/v0.2-testbench-discovery.md)
 - [v0.2 Native Testbench Runner Evidence](docs/workflows/v0.2-native-testbench-runner-evidence.md)
+- [v0.3 Specs Tree](docs/workflows/v0.3-specs-tree.md)
 - [Project Discovery](docs/design/project-discovery.md)
 - [Initial Extension Design](docs/design/initial-extension-design.md)
 - [MVP Roadmap](docs/design/mvp-roadmap.md)

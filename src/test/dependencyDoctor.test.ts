@@ -180,13 +180,9 @@ suite('Dependency Doctor', () => {
 			};
 		};
 
-		assert.deepStrictEqual(
-			packageJson.contributes.commands.map((command) => command.command).sort(),
-			[
-				checkDocsAssetDependenciesCommand,
-				checkGhdlDependenciesCommand,
-			].sort(),
-		);
+		const commandIds = packageJson.contributes.commands.map((command) => command.command);
+		assert.ok(commandIds.includes(checkDocsAssetDependenciesCommand));
+		assert.ok(commandIds.includes(checkGhdlDependenciesCommand));
 		assert.ok(packageJson.contributes.commands.every((command) => command.category === 'HDL Dev'));
 	});
 });
