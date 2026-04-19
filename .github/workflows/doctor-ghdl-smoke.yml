@@ -6,7 +6,6 @@ on:
       gencor_repository:
         description: GitHub repository containing the GEnCor tree.
         required: true
-        default: cosgroma/sergeant
       gencor_ref:
         description: Git ref to check out from the GEnCor repository.
         required: true

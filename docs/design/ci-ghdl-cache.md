@@ -22,7 +22,9 @@ File:
 
 Manual inputs:
 
-- `gencor_repository`: GitHub repository containing the GEnCor tree.
+- `gencor_repository`: GitHub repository containing the GEnCor tree. This is
+  required at dispatch time because the local `~/workspace/sergeant` tree is not
+  currently a git checkout with a known GitHub remote.
 - `gencor_ref`: Git ref to check out.
 - `gencor_path`: Path to the GEnCor engine inside the checked-out repository.
 - `ghdl_tag`: GHDL release tag.
@@ -60,8 +62,8 @@ extension tests run.
 - Do not cache secrets or credentials.
 - Linux extension tests run under `xvfb-run` on GitHub-hosted runners because
   VS Code requires a display server.
-- The default `gencor_repository` assumes a GitHub repository named
-  `cosgroma/sergeant`; adjust the manual workflow input if the source lives
-  somewhere else.
+- The workflow cannot use the local `~/workspace/sergeant` path from GitHub
+  Actions. The GEnCor source needs to be available from a repository or another
+  explicit download/checkout step.
 - If GHDL bootstrap time or cache churn becomes a problem, the next step is a
   prebuilt GHCR image with GHDL, `ghwdump`, Yosys, and `netlistsvg` installed.
