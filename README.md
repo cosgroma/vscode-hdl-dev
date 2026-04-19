@@ -1,9 +1,9 @@
 # HDL Dev
 
 HDL Dev is a VS Code extension for coordinating HDL project workflows from
-inside the editor. The project is currently an early TypeScript extension
-scaffold with supporting dependency, documentation, CI, and GitHub Pages
-infrastructure in place.
+inside the editor. The project is currently an early TypeScript extension with
+passive HDL project discovery, dependency-check commands, documentation, CI, and
+GitHub Pages infrastructure in place.
 
 The design direction is to keep HDL project scripts as the source of truth and
 wrap them with native VS Code surfaces: commands, Output channels, the Testing
@@ -11,8 +11,8 @@ API, tree views, status items, and focused artifact previews.
 
 ## Features
 
-Current shipped extension behavior is still minimal. The Yeoman baseline command
-is present while the HDL-specific surfaces are being designed and implemented.
+Current shipped extension behavior covers the v0.1 Project Discovery and
+Dependency Doctor milestone.
 
 Feature status:
 
@@ -25,9 +25,9 @@ Feature status:
 - [x] GitHub Actions Doctor smoke workflow with cached GHDL
 - [x] git-flow branch model with branch-direction policy checks
 - [x] MkDocs documentation site deployed to GitHub Pages
-- [ ] HDL project discovery
-- [ ] Dependency Doctor commands and Output channel
-- [ ] dependency status bar item
+- [x] HDL project discovery
+- [x] Dependency Doctor commands and Output channel
+- [x] dependency status bar item
 - [ ] VS Code Testing API testbench discovery and run support
 - [ ] waveform spec tree and SVG generation commands
 - [ ] schematic spec tree and SVG generation commands
@@ -37,11 +37,13 @@ Feature status:
 - [ ] interactive preview surfaces for generated SVGs
 - [ ] packetized-I/O debug session helpers
 
-Planned command names use the `HDL Dev` prefix:
+Shipped command names use the `HDL Dev` prefix:
 
-- `HDL Dev: Discover Project`
 - `HDL Dev: Check GHDL Dependencies`
 - `HDL Dev: Check Documentation Asset Dependencies`
+
+Planned command names:
+
 - `HDL Dev: List Testbenches`
 - `HDL Dev: Run Testbench`
 - `HDL Dev: Generate Waveform SVG`
@@ -83,16 +85,17 @@ https://cosgroma.github.io/vscode-hdl-dev/
 
 ## Extension Settings
 
-No HDL Dev settings are contributed yet.
+HDL Dev contributes these settings:
+
+- `hdlDev.projectRoots`: optional explicit project roots
+- `hdlDev.depsScript`: optional path to `scripts/deps.sh`
+- `hdlDev.toolchainRoot`: optional `GHDL_TOOLCHAIN_ROOT`
 
 Planned settings:
 
-- `hdlDev.projectRoots`: optional explicit project roots
 - `hdlDev.makeExecutable`: make executable path, defaulting to `make`
 - `hdlDev.defaultStopTime`: default GHDL stop time, for example `500us`
 - `hdlDev.defaultWaveFormat`: default wave format, initially `ghw`
-- `hdlDev.depsScript`: optional path to `scripts/deps.sh`
-- `hdlDev.toolchainRoot`: optional `GHDL_TOOLCHAIN_ROOT`
 
 ## Repository Workflow
 
@@ -141,11 +144,12 @@ generation.
 
 ## Known Issues
 
-- The extension UI still contains the Yeoman `Hello World` command.
-- No HDL-specific VS Code commands are implemented yet.
 - The local GHDL bootstrap path is Linux x86_64 only.
-- Dependency checks are human-readable shell output; JSON output is planned for
-  more reliable extension integration.
+- Dependency Doctor uses coarse pass/fail process status and human-readable
+  shell output; JSON output is planned for more reliable extension integration.
+- Dependency Doctor commands are blocked until the workspace is trusted.
+- Testbench running, spec trees, artifact navigation, previews, schemas, and
+  packetized-I/O debug helpers are planned but not implemented yet.
 - Waveform and schematic generation are documented as design targets but are not
   implemented in the extension yet.
 
@@ -157,6 +161,8 @@ Initial scaffold and project infrastructure:
 
 - TypeScript VS Code extension baseline
 - repo-owned dependency scripts and Make targets
+- passive HDL project discovery
+- Dependency Doctor commands, Output channel, and status item
 - cached GHDL Doctor smoke workflow
 - git-flow branch model
 - MkDocs GitHub Pages deployment
@@ -167,6 +173,8 @@ Design notes live under `docs/` and are published through MkDocs:
 
 - [VS Code Workbench References](docs/references/vscode-workbench-surfaces.md)
 - [GEnCor Integration Notes](docs/integrations/gencor.md)
+- [v0.1 Project Discovery And Dependency Doctor](docs/workflows/v0.1-project-discovery-and-doctor.md)
+- [Project Discovery](docs/design/project-discovery.md)
 - [Initial Extension Design](docs/design/initial-extension-design.md)
 - [MVP Roadmap](docs/design/mvp-roadmap.md)
 - [CI GHDL Cache Strategy](docs/design/ci-ghdl-cache.md)
