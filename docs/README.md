@@ -12,6 +12,9 @@ repo's own extension-facing command-line workflow.
 - [GEnCor Integration Notes](integrations/gencor.md) summarizes the GEnCor flows
   we plan to adapt: dependency checks, GHDL testbench runs, waveform SVG
   generation, schematic SVG generation, and packetized-I/O debug helpers.
+- [v0.1 Project Discovery And Dependency Doctor](workflows/v0.1-project-discovery-and-doctor.md)
+  describes the shipped discovery and dependency-check workflow, expected
+  output, trust behavior, and evidence coverage.
 - [Initial Extension Design](design/initial-extension-design.md) describes the
   proposed feature areas, VS Code surfaces, and implementation boundaries.
 - [Project Discovery](design/project-discovery.md) documents the passive
