@@ -18,6 +18,9 @@ repo's own extension-facing command-line workflow.
 - [v0.2 Native Testbench Runner](workflows/v0.2-testbench-discovery.md)
   describes the `make list-tbs` discovery contract, `make test` run contract,
   Testing API surface, trust behavior, and managed Makefile pattern.
+- [v0.2 Native Testbench Runner Evidence](workflows/v0.2-native-testbench-runner-evidence.md)
+  records the milestone evidence scope, test coverage, artifact expectations,
+  and manual transcript shape for closing v0.2.
 - [Initial Extension Design](design/initial-extension-design.md) describes the
   proposed feature areas, VS Code surfaces, and implementation boundaries.
 - [Project Discovery](design/project-discovery.md) documents the passive

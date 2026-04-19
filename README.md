@@ -180,6 +180,7 @@ Design notes live under `docs/` and are published through MkDocs:
 - [GEnCor Integration Notes](docs/integrations/gencor.md)
 - [v0.1 Project Discovery And Dependency Doctor](docs/workflows/v0.1-project-discovery-and-doctor.md)
 - [v0.2 Native Testbench Runner](docs/workflows/v0.2-testbench-discovery.md)
+- [v0.2 Native Testbench Runner Evidence](docs/workflows/v0.2-native-testbench-runner-evidence.md)
 - [Project Discovery](docs/design/project-discovery.md)
 - [Initial Extension Design](docs/design/initial-extension-design.md)
 - [MVP Roadmap](docs/design/mvp-roadmap.md)
