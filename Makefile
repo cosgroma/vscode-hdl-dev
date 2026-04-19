@@ -9,6 +9,9 @@ HDL_DEV_GHDL_TAG ?= v6.0.0
 HDL_DEV_GHDL_BASE ?= $(ROOT_DIR)/.cache/hdl-dev-ghdl
 HDL_DEV_GHDL_BOOTSTRAP_MODE ?= binary
 GHDL_TOOLCHAIN_ROOT ?= $(HDL_DEV_GHDL_BASE)/installs/$(HDL_DEV_GHDL_TAG)
+PYTHON ?= python3
+MKDOCS ?= mkdocs
+DOCS_SITE_DIR ?= site
 
 export HDL_DEV_GHDL_TAG
 export HDL_DEV_GHDL_BASE
@@ -93,3 +96,12 @@ ci: npm-install lint compile test ##@ Run the local extension CI sequence.
 
 .PHONY: doctor-smoke
 doctor-smoke: deps-install-ghdl lint compile test ##@ Run extension tests with local GHDL available.
+
+##@ Docs
+.PHONY: docs-install
+docs-install: ##@ Install MkDocs dependencies.
+	"$(PYTHON)" -m pip install -r requirements-docs.txt
+
+.PHONY: docs-build
+docs-build: ##@ Build the MkDocs site.
+	"$(MKDOCS)" build --strict --site-dir "$(DOCS_SITE_DIR)"

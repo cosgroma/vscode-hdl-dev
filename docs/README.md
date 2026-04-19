@@ -20,6 +20,8 @@ repo's own extension-facing command-line workflow.
   can cache a local dependency-managed GHDL toolchain for Doctor smoke tests.
 - [Git Flow](design/git-flow.md) records the repository branch model and how
   GitHub Actions enforce it.
+- [GitHub Pages](design/pages.md) records the MkDocs build and Pages deployment
+  setup.
 
 ## Current Direction
 
