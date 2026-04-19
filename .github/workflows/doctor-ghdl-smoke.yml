@@ -3,25 +3,10 @@ name: Doctor GHDL Smoke
 on:
   workflow_dispatch:
     inputs:
-      gencor_repository:
-        description: GitHub repository containing the GEnCor tree.
-        required: true
-      gencor_ref:
-        description: Git ref to check out from the GEnCor repository.
-        required: true
-        default: main
-      gencor_path:
-        description: Path to engines/gencor inside the checked-out GEnCor repository.
-        required: true
-        default: sergeant/engines/gencor
       ghdl_tag:
         description: GHDL release tag to install/cache.
         required: true
         default: v6.0.0
-      gnat_tag:
-        description: GNAT-FSF release tag for source-mode bootstrap.
-        required: true
-        default: gnat-14.2.0-1
       bootstrap_mode:
         description: GHDL bootstrap mode.
         required: true
@@ -30,7 +15,6 @@ on:
         options:
           - binary
           - auto
-          - source
 
 permissions:
   contents: read
@@ -39,60 +23,31 @@ jobs:
   doctor-ghdl:
     name: Cached GHDL Doctor Smoke
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 30
 
     env:
-      GHDL_BASE: ${{ github.workspace }}/.cache/gencor-ghdl
-      GHDL_TOOLCHAIN_ROOT: ${{ github.workspace }}/.cache/gencor-ghdl/installs/${{ inputs.ghdl_tag }}
+      HDL_DEV_GHDL_TAG: ${{ inputs.ghdl_tag }}
+      HDL_DEV_GHDL_BASE: ${{ github.workspace }}/.cache/hdl-dev-ghdl
+      HDL_DEV_GHDL_BOOTSTRAP_MODE: ${{ inputs.bootstrap_mode }}
+      GHDL_TOOLCHAIN_ROOT: ${{ github.workspace }}/.cache/hdl-dev-ghdl/installs/${{ inputs.ghdl_tag }}
 
     steps:
-      - name: Check out extension
+      - name: Check out repository
         uses: actions/checkout@v5
-
-      - name: Check out GEnCor source
-        uses: actions/checkout@v5
-        with:
-          repository: ${{ inputs.gencor_repository }}
-          ref: ${{ inputs.gencor_ref }}
-          path: sergeant
-
-      - name: Compute dependency script hash
-        id: deps-hash
-        working-directory: ${{ github.workspace }}/${{ inputs.gencor_path }}
-        run: |
-          {
-            find scripts -maxdepth 1 -type f -name 'deps.sh' -print
-            find scripts/lib/deps -type f -name '*.sh' -print
-          } | sort | xargs sha256sum | sha256sum | awk '{print "hash="$1}' >> "$GITHUB_OUTPUT"
 
       - name: Restore GHDL cache
         id: cache-ghdl
         uses: actions/cache@v5
         with:
-          path: |
-            ${{ env.GHDL_BASE }}
-            ${{ github.workspace }}/${{ inputs.gencor_path }}/.cache/ghdl-tools
+          path: .cache/hdl-dev-ghdl
           key: >-
-            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag }}-${{ inputs.gnat_tag }}-${{ inputs.bootstrap_mode }}-${{ steps.deps-hash.outputs.hash }}
+            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag }}-${{ inputs.bootstrap_mode }}-${{ hashFiles('Makefile', 'scripts/deps.sh', 'scripts/lib/deps/**/*.sh') }}
           restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag }}-${{ inputs.gnat_tag }}-${{ inputs.bootstrap_mode }}-
+            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag }}-${{ inputs.bootstrap_mode }}-
             ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag }}-
 
-      - name: Bootstrap cached GHDL toolchain
-        if: steps.cache-ghdl.outputs.cache-hit != 'true'
-        working-directory: ${{ github.workspace }}/${{ inputs.gencor_path }}
-        run: |
-          ./scripts/deps.sh bootstrap ghdl-local \
-            --base-dir "$GHDL_BASE" \
-            --tag "${{ inputs.ghdl_tag }}" \
-            --gnat-tag "${{ inputs.gnat_tag }}" \
-            --mode "${{ inputs.bootstrap_mode }}"
-
-      - name: Ensure ghwdump and dependency metadata
-        working-directory: ${{ github.workspace }}/${{ inputs.gencor_path }}
-        run: |
-          GHDL_TOOLCHAIN_ROOT="$GHDL_TOOLCHAIN_ROOT" \
-            ./scripts/deps.sh install ghdl --yes
+      - name: Ensure cached GHDL toolchain
+        run: make deps-install-ghdl
 
       - name: Publish toolchain environment
         run: |
@@ -100,9 +55,8 @@ jobs:
           echo "GHDL_TOOLCHAIN_ROOT=$GHDL_TOOLCHAIN_ROOT" >> "$GITHUB_ENV"
 
       - name: Check Doctor inputs
-        working-directory: ${{ github.workspace }}/${{ inputs.gencor_path }}
         run: |
-          ./scripts/deps.sh check ghdl
+          make deps-check-ghdl
           ghdl --version
           ghwdump -h | grep -E '^[[:space:]]*-H[[:space:]]'
 

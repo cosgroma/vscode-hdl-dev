@@ -1,16 +1,16 @@
 # CI GHDL Cache Strategy
 
 GitHub-hosted runners start from a fresh VM or container for each job. To avoid
-redownloading or rebuilding GHDL every time we run Doctor smoke tests, the
-`Doctor GHDL Smoke` workflow restores a GitHub Actions cache containing:
+redownloading GHDL every time we run Doctor smoke tests, the `Doctor GHDL Smoke`
+workflow restores a GitHub Actions cache containing this repo's local dependency
+root:
 
-- `.cache/gencor-ghdl`
-- the GEnCor `.cache/ghdl-tools` package cache
+- `.cache/hdl-dev-ghdl`
 
-The workflow is manual-only for now because it depends on checking out a GEnCor
-source repository and may hit public package/download services on a cache miss.
-Both workflows also cache `.vscode-test` so extension test runs do not need to
-redownload the VS Code test binary on every run.
+The workflow is manual-only for now because a cache miss still needs internet
+access to download the official GHDL release tarball. Both workflows also cache
+`.vscode-test` so extension test runs do not need to redownload the VS Code test
+binary on every run.
 
 ## Workflow
 
@@ -22,14 +22,8 @@ File:
 
 Manual inputs:
 
-- `gencor_repository`: GitHub repository containing the GEnCor tree. This is
-  required at dispatch time because the local `~/workspace/sergeant` tree is not
-  currently a git checkout with a known GitHub remote.
-- `gencor_ref`: Git ref to check out.
-- `gencor_path`: Path to the GEnCor engine inside the checked-out repository.
 - `ghdl_tag`: GHDL release tag.
-- `gnat_tag`: GNAT-FSF release tag, used by source-mode bootstrap.
-- `bootstrap_mode`: `binary`, `auto`, or `source`.
+- `bootstrap_mode`: `binary` or `auto`.
 
 The default bootstrap mode is `binary` because it is better suited to CI than a
 source build. Cache keys include:
@@ -37,17 +31,40 @@ source build. Cache keys include:
 - runner OS
 - runner architecture
 - GHDL tag
-- GNAT tag
 - bootstrap mode
-- a hash of `scripts/deps.sh` and `scripts/lib/deps/*.sh`
+- a hash of `Makefile`, `scripts/deps.sh`, and `scripts/lib/deps/*.sh`
+
+## Local Entry Points
+
+The extension repo owns the dependency and Make targets used by CI:
+
+```bash
+make deps-install-ghdl
+make deps-check-ghdl
+./scripts/deps.sh install ghdl --yes
+./scripts/deps.sh check ghdl
+./scripts/deps.sh bootstrap ghdl-local --tag v6.0.0 --mode binary
+```
+
+The default toolchain layout is:
+
+```text
+.cache/hdl-dev-ghdl/
+  downloads/
+  extract/
+  installs/<ghdl-tag>/
+```
+
+`GHDL_TOOLCHAIN_ROOT` points at `installs/<ghdl-tag>` and the workflow adds its
+`bin` directory to `PATH` before running the Doctor smoke checks.
 
 ## Validation
 
 After restoring or creating the cache, the workflow runs:
 
 ```bash
-./scripts/deps.sh install ghdl --yes
-./scripts/deps.sh check ghdl
+make deps-install-ghdl
+make deps-check-ghdl
 ghdl --version
 ghwdump -h | grep -E '^[[:space:]]*-H[[:space:]]'
 ```
@@ -62,8 +79,7 @@ extension tests run.
 - Do not cache secrets or credentials.
 - Linux extension tests run under `xvfb-run` on GitHub-hosted runners because
   VS Code requires a display server.
-- The workflow cannot use the local `~/workspace/sergeant` path from GitHub
-  Actions. The GEnCor source needs to be available from a repository or another
-  explicit download/checkout step.
+- The workflow does not check out GEnCor. GEnCor remains the reference pattern,
+  while this repo owns its Doctor dependency bootstrap.
 - If GHDL bootstrap time or cache churn becomes a problem, the next step is a
   prebuilt GHCR image with GHDL, `ghwdump`, Yosys, and `netlistsvg` installed.

@@ -1,13 +1,13 @@
 # Initial Extension Design
 
 The HDL Dev extension should be a VS Code-native coordinator for HDL projects.
-For GEnCor, that means driving existing Makefile and script entry points, then
-presenting tests, specs, dependencies, logs, and generated artifacts through
-standard VS Code surfaces.
+For GEnCor-derived projects, that means driving Makefile and script entry points
+that follow the GEnCor patterns, then presenting tests, specs, dependencies,
+logs, and generated artifacts through standard VS Code surfaces.
 
 ## Principles
 
-- Keep HDL project scripts as the source of truth.
+- Keep repo-local HDL project scripts as the source of truth.
 - Add structured UI around existing commands before inventing new workflows.
 - Prefer native VS Code APIs over custom webviews.
 - Treat dependency installation, bootstrapping, and command execution as
@@ -187,15 +187,15 @@ Initial settings:
 - `hdlDev.makeExecutable`: default `make`
 - `hdlDev.defaultStopTime`: default `500us`
 - `hdlDev.defaultWaveFormat`: default `ghw`
-- `hdlDev.gencor.depsScript`: optional path to `scripts/deps.sh`
-- `hdlDev.gencor.toolchainRoot`: optional `GHDL_TOOLCHAIN_ROOT`
+- `hdlDev.depsScript`: optional path to `scripts/deps.sh`
+- `hdlDev.toolchainRoot`: optional `GHDL_TOOLCHAIN_ROOT`
 
 Prefer auto-detection before requiring configuration.
 
 ## Future Script Improvements
 
-The extension will be more reliable if GEnCor grows small machine-readable
-entry points:
+The extension will be more reliable if the local dependency and Makefile entry
+points grow small machine-readable outputs:
 
 - `deps.sh check <profile> --json`
 - `deps.sh env ghdl --json`

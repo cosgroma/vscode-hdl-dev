@@ -1,8 +1,9 @@
 # GEnCor Integration Notes
 
-This note records the GEnCor behaviors we plan to leverage from the HDL Dev
-extension. The extension should call these flows rather than reimplementing
-their HDL-specific logic.
+This note records the GEnCor behaviors we plan to adapt for the HDL Dev
+extension. GEnCor is the reference implementation, but the extension repo should
+own the dependency scripts, Make targets, and CI-facing entry points it needs
+instead of checking out or invoking GEnCor directly.
 
 ## Source Locations
 
@@ -39,11 +40,14 @@ Important behavior to preserve:
 
 Extension implication:
 
-- The extension should expose dependency status and setup commands, but should
-  not duplicate package-manager or GHDL bootstrap logic.
-- A future improvement to GEnCor would be a machine-readable dependency query,
-  for example `deps.sh check ghdl --json` or `deps.sh env ghdl`, so the
-  extension can learn resolved tool paths and status without parsing prose.
+- The extension should expose dependency status and setup commands through
+  repo-local scripts patterned after GEnCor.
+- The local scripts should preserve the useful GEnCor contracts: profiles,
+  explicit `GHDL_TOOLCHAIN_ROOT`, paired `ghdl`/`ghwdump` resolution, and clear
+  check/install/bootstrap commands.
+- A future local improvement would be a machine-readable dependency query, for
+  example `deps.sh check ghdl --json` or `deps.sh env ghdl`, so the extension can
+  learn resolved tool paths and status without parsing prose.
 
 ## GHDL Testbench Runner
 
