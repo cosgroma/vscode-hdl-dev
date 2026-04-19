@@ -16,6 +16,7 @@ nav:
   - Integrations:
       - GEnCor: integrations/gencor.md
   - Design:
+      - Project Discovery: design/project-discovery.md
       - Initial Extension Design: design/initial-extension-design.md
       - MVP Roadmap: design/mvp-roadmap.md
       - CI GHDL Cache Strategy: design/ci-ghdl-cache.md
