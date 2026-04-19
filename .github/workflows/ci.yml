@@ -2,10 +2,23 @@ name: CI
 
 on:
   pull_request:
+    branches:
+      - main
+      - develop
   push:
     branches:
       - main
+      - develop
+      - feature/**
+      - bugfix/**
+      - release/**
+      - hotfix/**
+      - support/**
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read

@@ -1,6 +1,36 @@
 name: Doctor GHDL Smoke
 
 on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - .github/workflows/doctor-ghdl-smoke.yml
+      - .vscode-test.mjs
+      - Makefile
+      - eslint.config.mjs
+      - package-lock.json
+      - package.json
+      - scripts/**
+      - src/**
+      - tsconfig.json
+  push:
+    branches:
+      - main
+      - develop
+      - release/**
+      - hotfix/**
+    paths:
+      - .github/workflows/doctor-ghdl-smoke.yml
+      - .vscode-test.mjs
+      - Makefile
+      - eslint.config.mjs
+      - package-lock.json
+      - package.json
+      - scripts/**
+      - src/**
+      - tsconfig.json
   workflow_dispatch:
     inputs:
       ghdl_tag:
@@ -16,6 +46,10 @@ on:
           - binary
           - auto
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -26,10 +60,10 @@ jobs:
     timeout-minutes: 30
 
     env:
-      HDL_DEV_GHDL_TAG: ${{ inputs.ghdl_tag }}
+      HDL_DEV_GHDL_TAG: ${{ inputs.ghdl_tag || 'v6.0.0' }}
       HDL_DEV_GHDL_BASE: ${{ github.workspace }}/.cache/hdl-dev-ghdl
-      HDL_DEV_GHDL_BOOTSTRAP_MODE: ${{ inputs.bootstrap_mode }}
-      GHDL_TOOLCHAIN_ROOT: ${{ github.workspace }}/.cache/hdl-dev-ghdl/installs/${{ inputs.ghdl_tag }}
+      HDL_DEV_GHDL_BOOTSTRAP_MODE: ${{ inputs.bootstrap_mode || 'binary' }}
+      GHDL_TOOLCHAIN_ROOT: ${{ github.workspace }}/.cache/hdl-dev-ghdl/installs/${{ inputs.ghdl_tag || 'v6.0.0' }}
 
     steps:
       - name: Check out repository
@@ -41,10 +75,10 @@ jobs:
         with:
           path: .cache/hdl-dev-ghdl
           key: >-
-            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag }}-${{ inputs.bootstrap_mode }}-${{ hashFiles('Makefile', 'scripts/deps.sh', 'scripts/lib/deps/**/*.sh') }}
+            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag || 'v6.0.0' }}-${{ inputs.bootstrap_mode || 'binary' }}-${{ hashFiles('Makefile', 'scripts/deps.sh', 'scripts/lib/deps/**/*.sh') }}
           restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag }}-${{ inputs.bootstrap_mode }}-
-            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag }}-
+            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag || 'v6.0.0' }}-${{ inputs.bootstrap_mode || 'binary' }}-
+            ${{ runner.os }}-${{ runner.arch }}-ghdl-${{ inputs.ghdl_tag || 'v6.0.0' }}-
 
       - name: Ensure cached GHDL toolchain
         run: make deps-install-ghdl

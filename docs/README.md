@@ -18,6 +18,8 @@ repo's own extension-facing command-line workflow.
   implementation plan.
 - [CI GHDL Cache Strategy](design/ci-ghdl-cache.md) records how GitHub Actions
   can cache a local dependency-managed GHDL toolchain for Doctor smoke tests.
+- [Git Flow](design/git-flow.md) records the repository branch model and how
+  GitHub Actions enforce it.
 
 ## Current Direction
 
