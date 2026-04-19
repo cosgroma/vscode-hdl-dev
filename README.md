@@ -2,8 +2,8 @@
 
 HDL Dev is a VS Code extension for coordinating HDL project workflows from
 inside the editor. The project is currently an early TypeScript extension with
-passive HDL project discovery, dependency-check commands, documentation, CI, and
-GitHub Pages infrastructure in place.
+passive HDL project discovery, dependency-check commands, testbench discovery,
+documentation, CI, and GitHub Pages infrastructure in place.
 
 The design direction is to keep HDL project scripts as the source of truth and
 wrap them with native VS Code surfaces: commands, Output channels, the Testing
@@ -12,7 +12,7 @@ API, tree views, status items, and focused artifact previews.
 ## Features
 
 Current shipped extension behavior covers the v0.1 Project Discovery and
-Dependency Doctor milestone.
+Dependency Doctor milestone plus the first v0.2 testbench discovery slice.
 
 Feature status:
 
@@ -28,7 +28,8 @@ Feature status:
 - [x] HDL project discovery
 - [x] Dependency Doctor commands and Output channel
 - [x] dependency status bar item
-- [ ] VS Code Testing API testbench discovery and run support
+- [x] VS Code Testing API testbench discovery
+- [ ] VS Code Testing API testbench run support
 - [ ] waveform spec tree and SVG generation commands
 - [ ] schematic spec tree and SVG generation commands
 - [ ] generated artifact explorer
@@ -89,11 +90,11 @@ HDL Dev contributes these settings:
 
 - `hdlDev.projectRoots`: optional explicit project roots
 - `hdlDev.depsScript`: optional path to `scripts/deps.sh`
+- `hdlDev.makeExecutable`: make executable path, defaulting to `make`
 - `hdlDev.toolchainRoot`: optional `GHDL_TOOLCHAIN_ROOT`
 
 Planned settings:
 
-- `hdlDev.makeExecutable`: make executable path, defaulting to `make`
 - `hdlDev.defaultStopTime`: default GHDL stop time, for example `500us`
 - `hdlDev.defaultWaveFormat`: default wave format, initially `ghw`
 
@@ -174,6 +175,7 @@ Design notes live under `docs/` and are published through MkDocs:
 - [VS Code Workbench References](docs/references/vscode-workbench-surfaces.md)
 - [GEnCor Integration Notes](docs/integrations/gencor.md)
 - [v0.1 Project Discovery And Dependency Doctor](docs/workflows/v0.1-project-discovery-and-doctor.md)
+- [v0.2 Testbench Discovery](docs/workflows/v0.2-testbench-discovery.md)
 - [Project Discovery](docs/design/project-discovery.md)
 - [Initial Extension Design](docs/design/initial-extension-design.md)
 - [MVP Roadmap](docs/design/mvp-roadmap.md)

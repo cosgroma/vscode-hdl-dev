@@ -44,6 +44,11 @@
           "default": "scripts/deps.sh",
           "description": "Path to the dependency script to run from a discovered project or workspace folder."
         },
+        "hdlDev.makeExecutable": {
+          "type": "string",
+          "default": "make",
+          "description": "Make executable used for HDL project testbench discovery and runs."
+        },
         "hdlDev.toolchainRoot": {
           "type": "string",
           "default": "",
