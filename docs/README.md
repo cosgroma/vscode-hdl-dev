@@ -24,6 +24,9 @@ repo's own extension-facing command-line workflow.
 - [v0.3 Specs Tree](workflows/v0.3-specs-tree.md) describes the HDL view
   container, Specs tree grouping, refresh behavior, context values, and
   invalid-JSON handling.
+- [v0.3 Specs Tree Evidence](workflows/v0.3-specs-tree-evidence.md) records the
+  milestone evidence scope, automated coverage, generated SVG fixture evidence,
+  and context action capture for closing v0.3.
 - [Initial Extension Design](design/initial-extension-design.md) describes the
   proposed feature areas, VS Code surfaces, and implementation boundaries.
 - [Project Discovery](design/project-discovery.md) documents the passive
