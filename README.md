@@ -1,71 +1,188 @@
-# vscode-hdl-dev README
+# HDL Dev
 
-This is the README for your extension "vscode-hdl-dev". After writing up a brief description, we recommend including the following sections.
+HDL Dev is a VS Code extension for coordinating HDL project workflows from
+inside the editor. The project is currently an early TypeScript extension
+scaffold with supporting dependency, documentation, CI, and GitHub Pages
+infrastructure in place.
+
+The design direction is to keep HDL project scripts as the source of truth and
+wrap them with native VS Code surfaces: commands, Output channels, the Testing
+API, tree views, status items, and focused artifact previews.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Current shipped extension behavior is still minimal. The Yeoman baseline command
+is present while the HDL-specific surfaces are being designed and implemented.
 
-For example if there is an image subfolder under your extension project workspace:
+Feature status:
 
-\!\[feature X\]\(images/feature-x.png\)
+- [x] TypeScript VS Code extension scaffold
+- [x] npm-based lint, compile, and extension test workflow
+- [x] repo-owned dependency front door at `scripts/deps.sh`
+- [x] local GHDL bootstrap/cache support with paired `ghdl` and `ghwdump`
+- [x] Make targets for dependency checks and docs builds
+- [x] GitHub Actions CI for extension lint, compile, and tests
+- [x] GitHub Actions Doctor smoke workflow with cached GHDL
+- [x] git-flow branch model with branch-direction policy checks
+- [x] MkDocs documentation site deployed to GitHub Pages
+- [ ] HDL project discovery
+- [ ] Dependency Doctor commands and Output channel
+- [ ] dependency status bar item
+- [ ] VS Code Testing API testbench discovery and run support
+- [ ] waveform spec tree and SVG generation commands
+- [ ] schematic spec tree and SVG generation commands
+- [ ] generated artifact explorer
+- [ ] waveform and schematic JSON schemas
+- [ ] `ghwdump -H` signal picker for waveform specs
+- [ ] interactive preview surfaces for generated SVGs
+- [ ] packetized-I/O debug session helpers
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Planned command names use the `HDL Dev` prefix:
+
+- `HDL Dev: Discover Project`
+- `HDL Dev: Check GHDL Dependencies`
+- `HDL Dev: Check Documentation Asset Dependencies`
+- `HDL Dev: List Testbenches`
+- `HDL Dev: Run Testbench`
+- `HDL Dev: Generate Waveform SVG`
+- `HDL Dev: Generate Schematic SVG`
+- `HDL Dev: Open Latest Artifact`
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Extension development requires:
+
+- Node.js 22
+- npm
+- VS Code compatible with extension engine `^1.116.0`
+
+The dependency and HDL tooling scripts are intended for Linux development and CI
+first. The local GHDL bootstrap currently downloads the official Linux x86_64
+GHDL release tarball.
+
+Useful setup commands:
+
+```bash
+npm ci
+make deps-install-ghdl
+make deps-check-ghdl
+```
+
+Documentation builds require Python and MkDocs, isolated to docs tooling:
+
+```bash
+make docs-install
+make docs-build
+```
+
+The public documentation site is published at:
+
+```text
+https://cosgroma.github.io/vscode-hdl-dev/
+```
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+No HDL Dev settings are contributed yet.
 
-For example:
+Planned settings:
 
-This extension contributes the following settings:
+- `hdlDev.projectRoots`: optional explicit project roots
+- `hdlDev.makeExecutable`: make executable path, defaulting to `make`
+- `hdlDev.defaultStopTime`: default GHDL stop time, for example `500us`
+- `hdlDev.defaultWaveFormat`: default wave format, initially `ghw`
+- `hdlDev.depsScript`: optional path to `scripts/deps.sh`
+- `hdlDev.toolchainRoot`: optional `GHDL_TOOLCHAIN_ROOT`
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Repository Workflow
+
+This repository uses git-flow:
+
+- `main` is the production branch
+- `develop` is the default branch and integration branch
+- feature work uses `feature/*`
+- release stabilization uses `release/*`
+- production fixes use `hotfix/*`
+
+Start feature work with:
+
+```bash
+git flow feature start <name>
+```
+
+Finish feature work into `develop` with:
+
+```bash
+git flow feature finish <name>
+```
+
+GitHub Actions enforce pull request direction:
+
+- `main` accepts `release/*` and `hotfix/*`
+- `develop` accepts `feature/*`, `bugfix/*`, `release/*`, `hotfix/*`, and
+  `support/*`
+
+## Development
+
+Common local commands:
+
+```bash
+npm run lint
+npm run compile
+npm test
+make docs-build
+make deps-check-ghdl
+```
+
+The Doctor smoke workflow uses the repo-owned dependency scripts rather than
+checking out GEnCor. GEnCor remains the reference pattern for dependency
+management, GHDL testbench execution, waveform SVG generation, and schematic SVG
+generation.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- The extension UI still contains the Yeoman `Hello World` command.
+- No HDL-specific VS Code commands are implemented yet.
+- The local GHDL bootstrap path is Linux x86_64 only.
+- Dependency checks are human-readable shell output; JSON output is planned for
+  more reliable extension integration.
+- Waveform and schematic generation are documented as design targets but are not
+  implemented in the extension yet.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
+Initial scaffold and project infrastructure:
 
-Initial release of ...
+- TypeScript VS Code extension baseline
+- repo-owned dependency scripts and Make targets
+- cached GHDL Doctor smoke workflow
+- git-flow branch model
+- MkDocs GitHub Pages deployment
 
-### 1.0.1
+## Documentation
 
-Fixed issue #.
+Design notes live under `docs/` and are published through MkDocs:
 
-### 1.1.0
+- [VS Code Workbench References](docs/references/vscode-workbench-surfaces.md)
+- [GEnCor Integration Notes](docs/integrations/gencor.md)
+- [Initial Extension Design](docs/design/initial-extension-design.md)
+- [MVP Roadmap](docs/design/mvp-roadmap.md)
+- [CI GHDL Cache Strategy](docs/design/ci-ghdl-cache.md)
+- [Git Flow](docs/design/git-flow.md)
+- [GitHub Pages](docs/design/pages.md)
 
-Added features X, Y, and Z.
+## Following Extension Guidelines
 
----
+Implementation should follow the VS Code extension guidelines:
 
-## Following extension guidelines
+- prefer native VS Code APIs before webviews
+- respect workspace trust for dependency installation and command execution
+- keep long-running process output visible and inspectable
+- serialize shared-build-directory simulation flows
+- keep repo-local HDL scripts as the source of truth
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+Reference:
 
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+- [VS Code Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
