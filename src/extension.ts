@@ -9,6 +9,7 @@ import {
 	type DependencyCheckProfile,
 	type DependencyCheckStatus,
 } from './doctor/dependencyDoctor';
+import { registerSpecGenerationCommands } from './specs/specGenerationCommands';
 import { registerSpecsTree } from './specs/specsTree';
 import { registerTestbenchController } from './testbench/testbenchController';
 
@@ -27,6 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	statusSink.setStatus(createUnknownDependencyStatus());
 	registerSpecsTree(context);
+	registerSpecGenerationCommands(context, outputChannel);
 	registerTestbenchController(context, outputChannel);
 
 	const runDoctorCommand = async (profile: DependencyCheckProfile): Promise<void> => {
