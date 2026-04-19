@@ -1,26 +1,61 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+import {
+	checkDocsAssetDependenciesCommand,
+	checkGhdlDependenciesCommand,
+	createUnknownDependencyStatus,
+	formatDependencyStatusBar,
+	runDependencyCheck,
+	type DependencyCheckProfile,
+	type DependencyCheckStatus,
+} from './doctor/dependencyDoctor';
+
 export function activate(context: vscode.ExtensionContext) {
+	const outputChannel = vscode.window.createOutputChannel('HDL Dev');
+	const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
+	const statusSink = {
+		setStatus(status: DependencyCheckStatus): void {
+			const presentation = formatDependencyStatusBar(status);
+			statusBarItem.text = presentation.text;
+			statusBarItem.tooltip = presentation.tooltip;
+			statusBarItem.command = presentation.command;
+			statusBarItem.show();
+		},
+	};
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vscode-hdl-dev" is now active!');
+	statusSink.setStatus(createUnknownDependencyStatus());
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('vscode-hdl-dev.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from HDL Dev!');
-	});
+	const runDoctorCommand = async (profile: DependencyCheckProfile): Promise<void> => {
+		const configuration = vscode.workspace.getConfiguration('hdlDev');
+		const configuredRootPaths = configuration.get<readonly string[]>('projectRoots', []);
+		const depsScriptRelativePath = configuration.get<string>('depsScript', 'scripts/deps.sh');
+		const toolchainRoot = configuration.get<string>('toolchainRoot', '').trim();
 
-	context.subscriptions.push(disposable);
+		await runDependencyCheck({
+			profile,
+			workspaceTrusted: vscode.workspace.isTrusted,
+			workspaceFolderPaths: vscode.workspace.workspaceFolders?.map((folder) => folder.uri.fsPath) ?? [],
+			configuredRootPaths,
+			depsScriptRelativePath,
+			environmentOverrides: toolchainRoot === '' ? {} : { GHDL_TOOLCHAIN_ROOT: toolchainRoot },
+			output: outputChannel,
+			statusSink,
+			showErrorMessage: (message) => vscode.window.showErrorMessage(message),
+		});
+	};
+
+	context.subscriptions.push(
+		outputChannel,
+		statusBarItem,
+		vscode.commands.registerCommand(
+			checkGhdlDependenciesCommand,
+			() => runDoctorCommand('ghdl'),
+		),
+		vscode.commands.registerCommand(
+			checkDocsAssetDependenciesCommand,
+			() => runDoctorCommand('docs-assets'),
+		),
+	);
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
