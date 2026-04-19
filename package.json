@@ -9,15 +9,48 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:vscode-hdl-dev.checkGhdlDependencies",
+    "onCommand:vscode-hdl-dev.checkDocsAssetDependencies"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "vscode-hdl-dev.helloWorld",
-        "title": "Hello World"
+        "command": "vscode-hdl-dev.checkGhdlDependencies",
+        "title": "Check GHDL Dependencies",
+        "category": "HDL Dev"
+      },
+      {
+        "command": "vscode-hdl-dev.checkDocsAssetDependencies",
+        "title": "Check Documentation Asset Dependencies",
+        "category": "HDL Dev"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "HDL Dev",
+      "properties": {
+        "hdlDev.projectRoots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Optional explicit HDL project roots. Relative paths resolve under each workspace folder."
+        },
+        "hdlDev.depsScript": {
+          "type": "string",
+          "default": "scripts/deps.sh",
+          "description": "Path to the dependency script to run from a discovered project or workspace folder."
+        },
+        "hdlDev.toolchainRoot": {
+          "type": "string",
+          "default": "",
+          "description": "Optional GHDL toolchain root. When set, HDL Dev passes it as GHDL_TOOLCHAIN_ROOT and prepends its bin directory to PATH."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
