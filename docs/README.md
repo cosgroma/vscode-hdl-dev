@@ -15,9 +15,9 @@ repo's own extension-facing command-line workflow.
 - [v0.1 Project Discovery And Dependency Doctor](workflows/v0.1-project-discovery-and-doctor.md)
   describes the shipped discovery and dependency-check workflow, expected
   output, trust behavior, and evidence coverage.
-- [v0.2 Testbench Discovery](workflows/v0.2-testbench-discovery.md) describes
-  the `make list-tbs` discovery contract, Testing API surface, trust behavior,
-  and managed Makefile pattern.
+- [v0.2 Native Testbench Runner](workflows/v0.2-testbench-discovery.md)
+  describes the `make list-tbs` discovery contract, `make test` run contract,
+  Testing API surface, trust behavior, and managed Makefile pattern.
 - [Initial Extension Design](design/initial-extension-design.md) describes the
   proposed feature areas, VS Code surfaces, and implementation boundaries.
 - [Project Discovery](design/project-discovery.md) documents the passive
