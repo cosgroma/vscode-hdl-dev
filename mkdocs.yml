@@ -1,0 +1,28 @@
+site_name: HDL Dev
+site_description: HDL development support for VS Code
+site_url: https://cosgroma.github.io/vscode-hdl-dev/
+repo_url: https://github.com/cosgroma/vscode-hdl-dev
+repo_name: cosgroma/vscode-hdl-dev
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: readthedocs
+
+nav:
+  - Home: README.md
+  - References:
+      - VS Code Workbench Surfaces: references/vscode-workbench-surfaces.md
+  - Integrations:
+      - GEnCor: integrations/gencor.md
+  - Design:
+      - Initial Extension Design: design/initial-extension-design.md
+      - MVP Roadmap: design/mvp-roadmap.md
+      - CI GHDL Cache Strategy: design/ci-ghdl-cache.md
+      - Git Flow: design/git-flow.md
+      - GitHub Pages: design/pages.md
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
