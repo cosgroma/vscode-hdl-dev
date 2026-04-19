@@ -69,7 +69,7 @@ suite('Project Discovery', () => {
 
 		assert.deepStrictEqual(
 			result.projects.map((project) => project.rootPath),
-			[schematicOnlyProject, waveformOnlyProject].sort(),
+			sortPaths([schematicOnlyProject, waveformOnlyProject]),
 		);
 
 		const waveformProject = result.projects.find((project) => project.rootPath === waveformOnlyProject);
@@ -188,4 +188,8 @@ async function createHdlProject(
 async function writeFixtureFile(filePath: string, content: string): Promise<void> {
 	await fs.mkdir(path.dirname(filePath), { recursive: true });
 	await fs.writeFile(filePath, content, 'utf8');
+}
+
+function sortPaths(paths: readonly string[]): string[] {
+	return [...paths].sort((left, right) => left.localeCompare(right));
 }
