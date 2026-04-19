@@ -68,7 +68,7 @@ jobs:
 
       - name: Restore GHDL cache
         id: cache-ghdl
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ${{ env.GHDL_BASE }}
@@ -108,7 +108,7 @@ jobs:
           ghwdump -h | grep -E '^[[:space:]]*-H[[:space:]]'
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
@@ -116,10 +116,24 @@ jobs:
       - name: Install extension dependencies
         run: npm ci
 
+      - name: Restore VS Code test binary cache
+        uses: actions/cache@v5
+        with:
+          path: .vscode-test
+          key: ${{ runner.os }}-${{ runner.arch }}-vscode-test-${{ hashFiles('package.json', 'package-lock.json', '.vscode-test.mjs') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-vscode-test-
+
+      - name: Install Linux UI test dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb
+
       - name: Run extension tests with cached GHDL available
+        timeout-minutes: 10
         env:
           XDG_RUNTIME_DIR: ${{ runner.temp }}/xdg-runtime
         run: |
           mkdir -p "$XDG_RUNTIME_DIR"
           chmod 700 "$XDG_RUNTIME_DIR"
-          npm test
+          xvfb-run -a npm test

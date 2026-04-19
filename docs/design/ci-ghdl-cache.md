@@ -9,6 +9,8 @@ redownloading or rebuilding GHDL every time we run Doctor smoke tests, the
 
 The workflow is manual-only for now because it depends on checking out a GEnCor
 source repository and may hit public package/download services on a cache miss.
+Both workflows also cache `.vscode-test` so extension test runs do not need to
+redownload the VS Code test binary on every run.
 
 ## Workflow
 
@@ -56,6 +58,8 @@ extension tests run.
 - GitHub cache entries can be evicted.
 - Existing cache entries are immutable; changing the key creates a new cache.
 - Do not cache secrets or credentials.
+- Linux extension tests run under `xvfb-run` on GitHub-hosted runners because
+  VS Code requires a display server.
 - The default `gencor_repository` assumes a GitHub repository named
   `cosgroma/sergeant`; adjust the manual workflow input if the source lives
   somewhere else.
