@@ -27,6 +27,9 @@ repo's own extension-facing command-line workflow.
 - [v0.3 Specs Tree Evidence](workflows/v0.3-specs-tree-evidence.md) records the
   milestone evidence scope, automated coverage, generated SVG fixture evidence,
   and context action capture for closing v0.3.
+- [v0.4 Artifact Explorer](workflows/v0.4-artifact-explorer.md) describes the
+  generated artifact discovery contract, Artifacts tree grouping, refresh
+  behavior, empty states, and current limits.
 - [Initial Extension Design](design/initial-extension-design.md) describes the
   proposed feature areas, VS Code surfaces, and implementation boundaries.
 - [Project Discovery](design/project-discovery.md) documents the passive
@@ -48,7 +51,7 @@ The extension should be a coordinator around existing HDL project scripts:
 - run dependency and simulation commands with explicit environment state
 - expose testbenches through the VS Code Testing API
 - expose waveform and schematic specs through tree views
-- open generated artifacts in editor/webview surfaces
+- expose generated artifacts through tree views and editor surfaces
 - keep long-running command output in terminals or Output channels
 
 GEnCor remains the reference implementation for the HDL workflows, but this

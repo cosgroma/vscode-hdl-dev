@@ -192,7 +192,7 @@ suite('Spec Generation', () => {
 		);
 	});
 
-	test('opens generated SVGs after successful tree command execution', async () => {
+	test('opens generated SVGs and refreshes artifacts after successful tree command execution', async () => {
 		const projectPath = await createTempProject();
 		const spec = createSpec(projectPath, 'waveform', 'timer-wave');
 		const generatedResult = createGeneratedResult(spec);
@@ -207,6 +207,7 @@ suite('Spec Generation', () => {
 		assert.strictEqual(result, generatedResult);
 		assert.deepStrictEqual(host.openedArtifacts, [generatedResult.artifactPath]);
 		assert.deepStrictEqual(host.informationMessages, [generatedResult.message]);
+		assert.strictEqual(host.artifactRefreshes, 1);
 		assert.deepStrictEqual(host.errorMessages, []);
 	});
 
@@ -274,11 +275,16 @@ class CapturingCommandHost implements SpecGenerationCommandHost {
 	public readonly openedArtifacts: string[] = [];
 	public readonly errorMessages: string[] = [];
 	public readonly informationMessages: string[] = [];
+	public artifactRefreshes = 0;
 
 	public constructor(public readonly service: CoreSpecGenerationService) {}
 
 	public async openGeneratedSvg(artifactPath: string): Promise<void> {
 		this.openedArtifacts.push(artifactPath);
+	}
+
+	public async refreshArtifacts(): Promise<void> {
+		this.artifactRefreshes += 1;
 	}
 
 	public async showErrorMessage(message: string): Promise<void> {

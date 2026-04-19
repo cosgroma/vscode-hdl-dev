@@ -3,8 +3,8 @@
 HDL Dev is a VS Code extension for coordinating HDL project workflows from
 inside the editor. The project is currently an early TypeScript extension with
 passive HDL project discovery, dependency-check commands, testbench discovery,
-testbench run support, Specs tree navigation, documentation, CI, and GitHub
-Pages infrastructure in place.
+testbench run support, Specs tree navigation, generated artifact navigation,
+documentation, CI, and GitHub Pages infrastructure in place.
 
 The design direction is to keep HDL project scripts as the source of truth and
 wrap them with native VS Code surfaces: commands, Output channels, the Testing
@@ -15,7 +15,8 @@ API, tree views, status items, and focused artifact previews.
 Current shipped extension behavior covers the v0.1 Project Discovery and
 Dependency Doctor milestone, the v0.2 native testbench discovery and run
 implementation slices, and the first v0.3 Specs tree and SVG generation
-slices.
+slices. The first v0.4 Artifact Explorer slice adds passive generated artifact
+discovery and an Artifacts tree.
 
 Feature status:
 
@@ -37,7 +38,8 @@ Feature status:
 - [x] waveform and schematic Specs tree
 - [x] waveform SVG generation commands
 - [x] schematic SVG generation commands
-- [ ] generated artifact explorer
+- [x] generated artifact model and Artifacts tree
+- [ ] artifact reveal, copy-path, and latest-artifact actions
 - [ ] waveform and schematic JSON schemas
 - [ ] `ghwdump -H` signal picker for waveform specs
 - [ ] interactive preview surfaces for generated SVGs
@@ -46,6 +48,7 @@ Feature status:
 Shipped command names use the `HDL Dev` prefix:
 
 - `HDL Dev: Refresh Specs`
+- `HDL Dev: Refresh Artifacts`
 - `HDL Dev: Generate Waveform SVG`
 - `HDL Dev: Generate Waveform SVG Without Rerun`
 - `HDL Dev: Generate Schematic SVG`
@@ -157,8 +160,8 @@ generation.
   shell output; JSON output is planned for more reliable extension integration.
 - Dependency Doctor commands are blocked until the workspace is trusted.
 - Testbench result status is currently based on Make process exit status.
-- Spec schema validation, artifact navigation, previews, and packetized-I/O
-  debug helpers are planned but not implemented yet.
+- Spec schema validation, artifact actions, previews, and packetized-I/O debug
+  helpers are planned but not implemented yet.
 - Waveform and schematic generation status is based on Make process exit status
   plus a generated-SVG existence check.
 
@@ -188,6 +191,7 @@ Design notes live under `docs/` and are published through MkDocs:
 - [v0.2 Native Testbench Runner Evidence](docs/workflows/v0.2-native-testbench-runner-evidence.md)
 - [v0.3 Specs Tree](docs/workflows/v0.3-specs-tree.md)
 - [v0.3 Specs Tree Evidence](docs/workflows/v0.3-specs-tree-evidence.md)
+- [v0.4 Artifact Explorer](docs/workflows/v0.4-artifact-explorer.md)
 - [Project Discovery](docs/design/project-discovery.md)
 - [Initial Extension Design](docs/design/initial-extension-design.md)
 - [MVP Roadmap](docs/design/mvp-roadmap.md)
