@@ -14,6 +14,8 @@ repo's own extension-facing command-line workflow.
   generation, schematic SVG generation, and packetized-I/O debug helpers.
 - [Initial Extension Design](design/initial-extension-design.md) describes the
   proposed feature areas, VS Code surfaces, and implementation boundaries.
+- [Project Discovery](design/project-discovery.md) documents the passive
+  detection rules and capability model for GEnCor-style HDL projects.
 - [MVP Roadmap](design/mvp-roadmap.md) turns the design into a staged
   implementation plan.
 - [CI GHDL Cache Strategy](design/ci-ghdl-cache.md) records how GitHub Actions
