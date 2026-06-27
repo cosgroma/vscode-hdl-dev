@@ -28,8 +28,8 @@ repo's own extension-facing command-line workflow.
   milestone evidence scope, automated coverage, generated SVG fixture evidence,
   and context action capture for closing v0.3.
 - [v0.4 Artifact Explorer](workflows/v0.4-artifact-explorer.md) describes the
-  generated artifact discovery contract, Artifacts tree grouping, refresh
-  behavior, empty states, and current limits.
+  generated artifact discovery contract, Artifacts tree grouping, context
+  actions, refresh behavior, empty states, and current limits.
 - [Initial Extension Design](design/initial-extension-design.md) describes the
   proposed feature areas, VS Code surfaces, and implementation boundaries.
 - [Project Discovery](design/project-discovery.md) documents the passive

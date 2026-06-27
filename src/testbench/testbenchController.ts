@@ -12,6 +12,7 @@ import {
 } from './testbenchDiscovery';
 import {
 	TestbenchRunService,
+	type TestbenchRunOptions,
 	type TestbenchRunResult,
 	type TestbenchRunTarget,
 } from './testbenchRun';
@@ -21,6 +22,17 @@ export const testbenchControllerId = 'vscode-hdl-dev.testbenches';
 interface RunnableTestbenchItem {
 	readonly item: vscode.TestItem;
 	readonly target: TestbenchRunTarget;
+}
+
+export interface TestbenchRunCommandHost {
+	readonly service: Pick<TestbenchRunService, 'runTestbench'>;
+	readonly workspaceTrusted: boolean;
+	readonly makeExecutable: string;
+	readonly defaultStopTime: string;
+	readonly defaultWaveFormat: string;
+	readonly environmentOverrides: NodeJS.ProcessEnv;
+	readonly output: TestbenchRunOptions['output'];
+	refreshArtifacts(): Thenable<unknown>;
 }
 
 export function registerTestbenchController(
@@ -210,18 +222,20 @@ async function runTestbenches(
 
 			try {
 				run.started(runnable.item);
-				const result = await runService.runTestbench(runnable.target, {
+				const result = await runTestbenchAndRefreshArtifacts({
+					service: runService,
 					workspaceTrusted: vscode.workspace.isTrusted,
 					makeExecutable,
 					defaultStopTime,
 					defaultWaveFormat,
 					environmentOverrides: toolchainRoot === '' ? {} : { GHDL_TOOLCHAIN_ROOT: toolchainRoot },
 					output: outputChannel,
+					refreshArtifacts: () => vscode.commands.executeCommand(refreshArtifactsCommand),
+				}, runnable.target, {
 					cancellationSignal: abortController.signal,
 					onOutput: (chunk) => run.appendOutput(toTestOutput(chunk), undefined, runnable.item),
 				});
 				applyTestbenchRunResult(run, runnable.item, result);
-				void vscode.commands.executeCommand(refreshArtifactsCommand);
 			} finally {
 				for (const subscription of cancellationSubscriptions) {
 					subscription.dispose();
@@ -231,6 +245,26 @@ async function runTestbenches(
 	} finally {
 		run.end();
 	}
+}
+
+export async function runTestbenchAndRefreshArtifacts(
+	host: TestbenchRunCommandHost,
+	target: TestbenchRunTarget,
+	options: Pick<TestbenchRunOptions, 'cancellationSignal' | 'onOutput'> = {},
+): Promise<TestbenchRunResult> {
+	const result = await host.service.runTestbench(target, {
+		workspaceTrusted: host.workspaceTrusted,
+		makeExecutable: host.makeExecutable,
+		defaultStopTime: host.defaultStopTime,
+		defaultWaveFormat: host.defaultWaveFormat,
+		environmentOverrides: host.environmentOverrides,
+		output: host.output,
+		cancellationSignal: options.cancellationSignal,
+		onOutput: options.onOutput,
+	});
+
+	await host.refreshArtifacts();
+	return result;
 }
 
 function collectRequestedTestbenches(

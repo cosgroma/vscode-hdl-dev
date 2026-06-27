@@ -2,6 +2,7 @@ import * as path from 'node:path';
 
 import * as vscode from 'vscode';
 
+import { openArtifactCommand } from './artifactCommands';
 import {
 	artifactKinds,
 	discoverWorkspaceArtifacts,
@@ -271,9 +272,9 @@ function createArtifactTreeItem(artifact: DiscoveredArtifact): vscode.TreeItem {
 	item.contextValue = `hdlDev.artifacts.artifact.${artifact.kind}`;
 	item.resourceUri = vscode.Uri.file(artifact.filePath);
 	item.command = {
-		command: 'vscode.open',
+		command: openArtifactCommand,
 		title: 'Open Artifact',
-		arguments: [vscode.Uri.file(artifact.filePath)],
+		arguments: [artifact],
 	};
 	item.iconPath = new vscode.ThemeIcon(iconForArtifact(artifact.kind));
 	return item;

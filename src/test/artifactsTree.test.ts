@@ -4,6 +4,11 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 
 import {
+	copyArtifactPathCommand,
+	openArtifactCommand,
+	revealArtifactCommand,
+} from '../artifacts/artifactCommands';
+import {
 	ArtifactsTreeDataProvider,
 	artifactsTreeViewId,
 	createArtifactsTreeItem,
@@ -70,7 +75,8 @@ suite('Artifacts Tree', () => {
 		assert.strictEqual(groupItem.contextValue, 'hdlDev.artifacts.kind.waveformSvg');
 		assert.strictEqual(artifactItem.label, 'timer-wave.svg');
 		assert.strictEqual(artifactItem.contextValue, 'hdlDev.artifacts.artifact.waveformSvg');
-		assert.strictEqual(artifactItem.command?.command, 'vscode.open');
+		assert.strictEqual(artifactItem.command?.command, openArtifactCommand);
+		assert.deepStrictEqual(artifactItem.command?.arguments, [artifactNode.artifact]);
 
 		provider.dispose();
 	});
@@ -131,12 +137,19 @@ suite('Artifacts Tree', () => {
 				views: Record<string, Array<{ readonly id: string; readonly name: string; readonly when?: string }>>;
 				menus: {
 					'view/title': Array<{ readonly command: string; readonly when: string }>;
+					'view/item/context': Array<{ readonly command: string; readonly when: string }>;
 				};
 			};
 		};
+		const contributedCommandIds = packageJson.contributes.commands.map((command) => command.command);
+		const artifactItemMenus = packageJson.contributes.menus['view/item/context'];
 
 		assert.ok(packageJson.activationEvents.includes(`onView:${artifactsTreeViewId}`));
 		assert.ok(packageJson.activationEvents.includes(`onCommand:${refreshArtifactsCommand}`));
+		for (const command of [openArtifactCommand, revealArtifactCommand, copyArtifactPathCommand]) {
+			assert.ok(packageJson.activationEvents.includes(`onCommand:${command}`));
+			assert.ok(contributedCommandIds.includes(command));
+		}
 		assert.ok(packageJson.contributes.commands.some((command) => (
 			command.command === refreshArtifactsCommand && command.category === 'HDL Dev'
 		)));
@@ -149,6 +162,14 @@ suite('Artifacts Tree', () => {
 			menu.command === refreshArtifactsCommand
 				&& menu.when === `view == ${artifactsTreeViewId}`
 		)));
+		for (const kind of artifactKinds()) {
+			const when = `view == ${artifactsTreeViewId} && viewItem == hdlDev.artifacts.artifact.${kind}`;
+			for (const command of [openArtifactCommand, revealArtifactCommand, copyArtifactPathCommand]) {
+				assert.ok(artifactItemMenus.some((menu) => (
+					menu.command === command && menu.when === when
+				)), `${command} is contributed for ${kind}`);
+			}
+		}
 	});
 });
 

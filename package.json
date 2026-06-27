@@ -32,6 +32,9 @@
     "onStartupFinished",
     "onView:vscode-hdl-dev.specs",
     "onView:vscode-hdl-dev.artifacts",
+    "onCommand:vscode-hdl-dev.openArtifact",
+    "onCommand:vscode-hdl-dev.revealArtifact",
+    "onCommand:vscode-hdl-dev.copyArtifactPath",
     "onCommand:vscode-hdl-dev.generateWaveformSvg",
     "onCommand:vscode-hdl-dev.generateWaveformSvgNoRun",
     "onCommand:vscode-hdl-dev.generateSchematicSvg",
@@ -66,6 +69,21 @@
       {
         "command": "vscode-hdl-dev.refreshArtifacts",
         "title": "Refresh Artifacts",
+        "category": "HDL Dev"
+      },
+      {
+        "command": "vscode-hdl-dev.openArtifact",
+        "title": "Open Artifact",
+        "category": "HDL Dev"
+      },
+      {
+        "command": "vscode-hdl-dev.revealArtifact",
+        "title": "Reveal Artifact in File Explorer",
+        "category": "HDL Dev"
+      },
+      {
+        "command": "vscode-hdl-dev.copyArtifactPath",
+        "title": "Copy Artifact Path",
         "category": "HDL Dev"
       },
       {
@@ -173,6 +191,111 @@
           "command": "vscode-hdl-dev.generateSchematicSvg",
           "when": "view == vscode-hdl-dev.specs && viewItem == hdlDev.specs.spec.schematic.valid",
           "group": "navigation@1"
+        },
+        {
+          "command": "vscode-hdl-dev.openArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.waveDump",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vscode-hdl-dev.openArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.waveformSvg",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vscode-hdl-dev.openArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.schematicSvg",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vscode-hdl-dev.openArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.schematicJson",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vscode-hdl-dev.openArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.log",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vscode-hdl-dev.openArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.plot",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vscode-hdl-dev.openArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.csv",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vscode-hdl-dev.revealArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.waveDump",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vscode-hdl-dev.revealArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.waveformSvg",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vscode-hdl-dev.revealArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.schematicSvg",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vscode-hdl-dev.revealArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.schematicJson",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vscode-hdl-dev.revealArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.log",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vscode-hdl-dev.revealArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.plot",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vscode-hdl-dev.revealArtifact",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.csv",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vscode-hdl-dev.copyArtifactPath",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.waveDump",
+          "group": "navigation@3"
+        },
+        {
+          "command": "vscode-hdl-dev.copyArtifactPath",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.waveformSvg",
+          "group": "navigation@3"
+        },
+        {
+          "command": "vscode-hdl-dev.copyArtifactPath",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.schematicSvg",
+          "group": "navigation@3"
+        },
+        {
+          "command": "vscode-hdl-dev.copyArtifactPath",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.schematicJson",
+          "group": "navigation@3"
+        },
+        {
+          "command": "vscode-hdl-dev.copyArtifactPath",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.log",
+          "group": "navigation@3"
+        },
+        {
+          "command": "vscode-hdl-dev.copyArtifactPath",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.plot",
+          "group": "navigation@3"
+        },
+        {
+          "command": "vscode-hdl-dev.copyArtifactPath",
+          "when": "view == vscode-hdl-dev.artifacts && viewItem == hdlDev.artifacts.artifact.csv",
+          "group": "navigation@3"
         }
       ]
     }
