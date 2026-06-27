@@ -5,10 +5,17 @@ import * as path from 'node:path';
 
 import {
 	buildTestbenchRunRequest,
+	testbenchRunExecution,
 	TestbenchRunService,
 	type TestbenchRunOutput,
+	type TestbenchRunOptions,
+	type TestbenchRunResult,
 	type TestbenchRunTarget,
 } from '../testbench/testbenchRun';
+import {
+	runTestbenchAndRefreshArtifacts,
+	type TestbenchRunCommandHost,
+} from '../testbench/testbenchController';
 import type {
 	TestbenchProcessEvents,
 	TestbenchProcessRequest,
@@ -200,6 +207,43 @@ suite('Testbench Run', () => {
 			['test', 'TB=timer_tb', 'STOP_TIME=500us', 'WAVE_FORMAT=ghw'],
 		);
 	});
+
+	test('refreshes artifacts after a completed controller testbench run', async () => {
+		const projectPath = await createTempProject();
+		const target = createTarget(projectPath, 'timer_tb');
+		const service = new FakeRunService('passed');
+		const output = new CapturingOutput();
+		const outputChunks: string[] = [];
+		let artifactRefreshes = 0;
+		const host: TestbenchRunCommandHost = {
+			service,
+			workspaceTrusted: true,
+			makeExecutable: 'gmake',
+			defaultStopTime: '2us',
+			defaultWaveFormat: 'fst',
+			environmentOverrides: { GHDL_TOOLCHAIN_ROOT: '/tools/ghdl' },
+			output,
+			async refreshArtifacts(): Promise<void> {
+				artifactRefreshes += 1;
+			},
+		};
+
+		const result = await runTestbenchAndRefreshArtifacts(host, target, {
+			onOutput: (chunk) => outputChunks.push(chunk),
+		});
+
+		assert.strictEqual(result.outcome, 'passed');
+		assert.strictEqual(artifactRefreshes, 1);
+		assert.deepStrictEqual(outputChunks, ['simulation output\n']);
+		assert.strictEqual(service.requests.length, 1);
+		assert.strictEqual(service.requests[0].target, target);
+		assert.strictEqual(service.requests[0].options.workspaceTrusted, true);
+		assert.strictEqual(service.requests[0].options.makeExecutable, 'gmake');
+		assert.strictEqual(service.requests[0].options.defaultStopTime, '2us');
+		assert.strictEqual(service.requests[0].options.defaultWaveFormat, 'fst');
+		assert.deepStrictEqual(service.requests[0].options.environmentOverrides, { GHDL_TOOLCHAIN_ROOT: '/tools/ghdl' });
+		assert.strictEqual(service.requests[0].options.output, output);
+	});
 });
 
 class CapturingOutput implements TestbenchRunOutput {
@@ -263,6 +307,35 @@ class ThrowingProcessRunner implements TestbenchProcessRunner {
 
 	public run(): Promise<TestbenchProcessResult> {
 		return Promise.reject(this.error);
+	}
+}
+
+class FakeRunService {
+	public readonly requests: Array<{
+		readonly target: TestbenchRunTarget;
+		readonly options: TestbenchRunOptions;
+	}> = [];
+
+	public constructor(private readonly outcome: TestbenchRunResult['outcome']) {}
+
+	public async runTestbench(
+		target: TestbenchRunTarget,
+		options: TestbenchRunOptions,
+	): Promise<TestbenchRunResult> {
+		this.requests.push({ target, options });
+		options.onOutput?.('simulation output\n');
+
+		return {
+			outcome: this.outcome,
+			execution: testbenchRunExecution,
+			target,
+			durationMs: 1,
+			rawOutput: {
+				stdout: 'simulation output\n',
+				stderr: '',
+			},
+			message: `Testbench ${target.name} ${this.outcome}`,
+		};
 	}
 }
 

@@ -39,7 +39,8 @@ Feature status:
 - [x] waveform SVG generation commands
 - [x] schematic SVG generation commands
 - [x] generated artifact model and Artifacts tree
-- [ ] artifact reveal, copy-path, and latest-artifact actions
+- [x] artifact open, reveal, and copy-path actions
+- [ ] latest-artifact command
 - [ ] waveform and schematic JSON schemas
 - [ ] `ghwdump -H` signal picker for waveform specs
 - [ ] interactive preview surfaces for generated SVGs
@@ -52,6 +53,9 @@ Shipped command names use the `HDL Dev` prefix:
 - `HDL Dev: Generate Waveform SVG`
 - `HDL Dev: Generate Waveform SVG Without Rerun`
 - `HDL Dev: Generate Schematic SVG`
+- `HDL Dev: Open Artifact`
+- `HDL Dev: Reveal Artifact in File Explorer`
+- `HDL Dev: Copy Artifact Path`
 - `HDL Dev: Check GHDL Dependencies`
 - `HDL Dev: Check Documentation Asset Dependencies`
 

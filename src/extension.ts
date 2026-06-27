@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 
+import { registerArtifactCommands } from './artifacts/artifactCommands';
 import { registerArtifactsTree } from './artifacts/artifactsTree';
 import {
 	checkDocsAssetDependenciesCommand,
@@ -30,6 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 	statusSink.setStatus(createUnknownDependencyStatus());
 	registerSpecsTree(context);
 	registerArtifactsTree(context);
+	registerArtifactCommands(context);
 	registerSpecGenerationCommands(context, outputChannel);
 	registerTestbenchController(context, outputChannel);
 
