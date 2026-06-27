@@ -3,6 +3,25 @@
   "displayName": "HDL Dev",
   "description": "HDL development support for VS Code",
   "version": "0.0.1",
+  "publisher": "cosgroma",
+  "preview": true,
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cosgroma/vscode-hdl-dev.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cosgroma/vscode-hdl-dev/issues"
+  },
+  "homepage": "https://cosgroma.github.io/vscode-hdl-dev/",
+  "keywords": [
+    "hdl",
+    "vhdl",
+    "ghdl",
+    "fpga",
+    "testbench",
+    "waveform"
+  ],
   "engines": {
     "vscode": "^1.116.0"
   },
