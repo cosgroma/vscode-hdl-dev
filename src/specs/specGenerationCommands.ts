@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 
+import { refreshArtifactsCommand } from '../artifacts/artifactsTree';
 import {
 	SpecGenerationService,
 	type SpecGenerationMode,
@@ -20,6 +21,7 @@ export interface SpecGenerationCommandHost {
 	readonly makeExecutable: string;
 	readonly environmentOverrides: NodeJS.ProcessEnv;
 	openGeneratedSvg(artifactPath: string): Thenable<unknown>;
+	refreshArtifacts(): Thenable<unknown>;
 	showErrorMessage(message: string): Thenable<unknown>;
 	showInformationMessage(message: string): Thenable<unknown>;
 }
@@ -40,6 +42,7 @@ export function registerSpecGenerationCommands(
 			makeExecutable: configuration.get<string>('makeExecutable', 'make'),
 			environmentOverrides: toolchainRoot === '' ? {} : { GHDL_TOOLCHAIN_ROOT: toolchainRoot },
 			openGeneratedSvg: (artifactPath) => vscode.commands.executeCommand('vscode.open', vscode.Uri.file(artifactPath)),
+			refreshArtifacts: () => vscode.commands.executeCommand(refreshArtifactsCommand),
 			showErrorMessage: (message) => vscode.window.showErrorMessage(message),
 			showInformationMessage: (message) => vscode.window.showInformationMessage(message),
 		};
@@ -86,6 +89,7 @@ export async function runSpecGenerationCommand(
 	if (result.outcome === 'generated') {
 		await host.openGeneratedSvg(result.artifactPath);
 		await host.showInformationMessage(result.message);
+		await host.refreshArtifacts();
 	} else if (result.outcome !== 'cancelled') {
 		await host.showErrorMessage(result.message);
 	}

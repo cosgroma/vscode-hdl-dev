@@ -2,6 +2,7 @@ import * as path from 'node:path';
 
 import * as vscode from 'vscode';
 
+import { refreshArtifactsCommand } from '../artifacts/artifactsTree';
 import {
 	createTestbenchItemId,
 	TestbenchDiscoveryService,
@@ -220,6 +221,7 @@ async function runTestbenches(
 					onOutput: (chunk) => run.appendOutput(toTestOutput(chunk), undefined, runnable.item),
 				});
 				applyTestbenchRunResult(run, runnable.item, result);
+				void vscode.commands.executeCommand(refreshArtifactsCommand);
 			} finally {
 				for (const subscription of cancellationSubscriptions) {
 					subscription.dispose();

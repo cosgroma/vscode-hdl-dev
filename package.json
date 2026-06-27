@@ -3,6 +3,25 @@
   "displayName": "HDL Dev",
   "description": "HDL development support for VS Code",
   "version": "0.0.1",
+  "publisher": "cosgroma",
+  "preview": true,
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cosgroma/vscode-hdl-dev.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cosgroma/vscode-hdl-dev/issues"
+  },
+  "homepage": "https://cosgroma.github.io/vscode-hdl-dev/",
+  "keywords": [
+    "hdl",
+    "vhdl",
+    "ghdl",
+    "fpga",
+    "testbench",
+    "waveform"
+  ],
   "engines": {
     "vscode": "^1.116.0"
   },
@@ -12,10 +31,12 @@
   "activationEvents": [
     "onStartupFinished",
     "onView:vscode-hdl-dev.specs",
+    "onView:vscode-hdl-dev.artifacts",
     "onCommand:vscode-hdl-dev.generateWaveformSvg",
     "onCommand:vscode-hdl-dev.generateWaveformSvgNoRun",
     "onCommand:vscode-hdl-dev.generateSchematicSvg",
     "onCommand:vscode-hdl-dev.refreshSpecs",
+    "onCommand:vscode-hdl-dev.refreshArtifacts",
     "onCommand:vscode-hdl-dev.checkGhdlDependencies",
     "onCommand:vscode-hdl-dev.checkDocsAssetDependencies"
   ],
@@ -40,6 +61,11 @@
       {
         "command": "vscode-hdl-dev.refreshSpecs",
         "title": "Refresh Specs",
+        "category": "HDL Dev"
+      },
+      {
+        "command": "vscode-hdl-dev.refreshArtifacts",
+        "title": "Refresh Artifacts",
         "category": "HDL Dev"
       },
       {
@@ -111,6 +137,11 @@
           "id": "vscode-hdl-dev.specs",
           "name": "Specs",
           "when": "hdlDev.hasProjects"
+        },
+        {
+          "id": "vscode-hdl-dev.artifacts",
+          "name": "Artifacts",
+          "when": "hdlDev.hasProjects"
         }
       ]
     },
@@ -119,6 +150,11 @@
         {
           "command": "vscode-hdl-dev.refreshSpecs",
           "when": "view == vscode-hdl-dev.specs",
+          "group": "navigation"
+        },
+        {
+          "command": "vscode-hdl-dev.refreshArtifacts",
+          "when": "view == vscode-hdl-dev.artifacts",
           "group": "navigation"
         }
       ],
