@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "publisher": "cosgroma",
   "preview": true,
-  "license": "UNLICENSED",
+  "license": "GPL-3.0-or-later",
   "repository": {
     "type": "git",
     "url": "https://github.com/cosgroma/vscode-hdl-dev.git"
