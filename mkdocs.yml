@@ -11,11 +11,28 @@ theme:
 
 nav:
   - Home: README.md
+  - Agent Harness:
+      - Overview: agent/README.md
+      - Issue Workflow: agent/issue-workflow.md
+      - Validation: agent/validation.md
+  - Plans:
+      - Overview: plans/README.md
+      - Active:
+          - Issue 30 Agent Harness Structure: plans/active/issue-30-agent-harness-structure.md
+      - Completed: plans/completed/README.md
+      - Templates:
+          - Issue Plan: plans/templates/issue-plan.md
+  - Quality:
+      - Golden Principles: quality/golden-principles.md
+      - Technical Debt Tracker: quality/tech-debt-tracker.md
+  - Evidence: evidence/README.md
   - References:
+      - Index: references/index.md
       - VS Code Workbench Surfaces: references/vscode-workbench-surfaces.md
   - Integrations:
       - GEnCor: integrations/gencor.md
   - Workflows:
+      - Index: workflows/index.md
       - v0.1 Project Discovery And Dependency Doctor: workflows/v0.1-project-discovery-and-doctor.md
       - v0.2 Native Testbench Runner: workflows/v0.2-testbench-discovery.md
       - v0.2 Native Testbench Runner Evidence: workflows/v0.2-native-testbench-runner-evidence.md
@@ -23,6 +40,7 @@ nav:
       - v0.3 Specs Tree Evidence: workflows/v0.3-specs-tree-evidence.md
       - v0.4 Artifact Explorer: workflows/v0.4-artifact-explorer.md
   - Design:
+      - Index: design/index.md
       - Project Discovery: design/project-discovery.md
       - Initial Extension Design: design/initial-extension-design.md
       - MVP Roadmap: design/mvp-roadmap.md

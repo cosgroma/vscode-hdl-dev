@@ -105,3 +105,8 @@ docs-install: ##@ Install MkDocs dependencies.
 .PHONY: docs-build
 docs-build: ##@ Build the MkDocs site.
 	"$(MKDOCS)" build --strict --site-dir "$(DOCS_SITE_DIR)"
+
+##@ Agent Harness
+.PHONY: agent-harness-check
+agent-harness-check: ##@ Validate agent harness docs, links, fixtures, and nav.
+	node scripts/validate-agent-harness.mjs
