@@ -1,0 +1,1 @@
+fixture run TB=timer_tb STOP_TIME=20us WAVE_FORMAT=ghw

@@ -1,0 +1,14 @@
+{
+  "name": "timer-wave",
+  "testbench": "timer_tb",
+  "signals": [
+    {
+      "path": "/timer_tb/clk",
+      "label": "clk"
+    },
+    {
+      "path": "/timer_tb/rst",
+      "label": "rst"
+    }
+  ]
+}

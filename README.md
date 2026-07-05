@@ -150,6 +150,7 @@ npm run compile
 npm test
 make docs-build
 make deps-check-ghdl
+make agent-harness-check
 ```
 
 The Doctor smoke workflow uses the repo-owned dependency scripts rather than
@@ -188,6 +189,9 @@ Initial scaffold and project infrastructure:
 
 Design notes live under `docs/` and are published through MkDocs:
 
+- [Agent Harness](docs/agent/README.md)
+- [Architecture](ARCHITECTURE.md)
+- [Validation](docs/agent/validation.md)
 - [VS Code Workbench References](docs/references/vscode-workbench-surfaces.md)
 - [GEnCor Integration Notes](docs/integrations/gencor.md)
 - [v0.1 Project Discovery And Dependency Doctor](docs/workflows/v0.1-project-discovery-and-doctor.md)
