@@ -19,6 +19,7 @@ nav:
       - Overview: plans/README.md
       - Active:
           - Issue 12 Artifact Evidence: plans/active/issue-12-artifact-evidence.md
+          - Issue 13 Spec Schema Design: plans/active/issue-13-spec-schema-design.md
           - Issue 30 Agent Harness Structure: plans/active/issue-30-agent-harness-structure.md
       - Completed: plans/completed/README.md
       - Templates:
@@ -44,6 +45,7 @@ nav:
   - Design:
       - Index: design/index.md
       - Project Discovery: design/project-discovery.md
+      - Spec JSON Schemas: design/spec-json-schemas.md
       - Initial Extension Design: design/initial-extension-design.md
       - MVP Roadmap: design/mvp-roadmap.md
       - CI GHDL Cache Strategy: design/ci-ghdl-cache.md

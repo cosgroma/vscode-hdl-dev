@@ -202,6 +202,7 @@ Design notes live under `docs/` and are published through MkDocs:
 - [v0.4 Artifact Explorer](docs/workflows/v0.4-artifact-explorer.md)
 - [v0.4 Artifact Explorer Evidence](docs/workflows/v0.4-artifact-explorer-evidence.md)
 - [Project Discovery](docs/design/project-discovery.md)
+- [Spec JSON Schemas](docs/design/spec-json-schemas.md)
 - [Initial Extension Design](docs/design/initial-extension-design.md)
 - [MVP Roadmap](docs/design/mvp-roadmap.md)
 - [CI GHDL Cache Strategy](docs/design/ci-ghdl-cache.md)
