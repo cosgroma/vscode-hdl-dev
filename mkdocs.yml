@@ -18,6 +18,7 @@ nav:
   - Plans:
       - Overview: plans/README.md
       - Active:
+          - Issue 12 Artifact Evidence: plans/active/issue-12-artifact-evidence.md
           - Issue 30 Agent Harness Structure: plans/active/issue-30-agent-harness-structure.md
       - Completed: plans/completed/README.md
       - Templates:
@@ -39,6 +40,7 @@ nav:
       - v0.3 Specs Tree: workflows/v0.3-specs-tree.md
       - v0.3 Specs Tree Evidence: workflows/v0.3-specs-tree-evidence.md
       - v0.4 Artifact Explorer: workflows/v0.4-artifact-explorer.md
+      - v0.4 Artifact Explorer Evidence: workflows/v0.4-artifact-explorer-evidence.md
   - Design:
       - Index: design/index.md
       - Project Discovery: design/project-discovery.md

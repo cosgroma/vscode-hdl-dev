@@ -200,6 +200,7 @@ Design notes live under `docs/` and are published through MkDocs:
 - [v0.3 Specs Tree](docs/workflows/v0.3-specs-tree.md)
 - [v0.3 Specs Tree Evidence](docs/workflows/v0.3-specs-tree-evidence.md)
 - [v0.4 Artifact Explorer](docs/workflows/v0.4-artifact-explorer.md)
+- [v0.4 Artifact Explorer Evidence](docs/workflows/v0.4-artifact-explorer-evidence.md)
 - [Project Discovery](docs/design/project-discovery.md)
 - [Initial Extension Design](docs/design/initial-extension-design.md)
 - [MVP Roadmap](docs/design/mvp-roadmap.md)

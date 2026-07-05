@@ -9,3 +9,4 @@ evidence expectations for each milestone.
 - [v0.3 Specs Tree](v0.3-specs-tree.md)
 - [v0.3 Specs Tree Evidence](v0.3-specs-tree-evidence.md)
 - [v0.4 Artifact Explorer](v0.4-artifact-explorer.md)
+- [v0.4 Artifact Explorer Evidence](v0.4-artifact-explorer-evidence.md)
