@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cosgroma.github.io/vscode-hdl-dev/schemas/schematic-spec.schema.json",
+  "title": "HDL Dev schematic spec",
+  "description": "Validates schematic specs under docs/schematics/specs. The name controls SCHEMATIC=<name> and the generated SVG filename.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Spec identifier. This should match the filename stem and the Make SCHEMATIC value."
+    },
+    "extends": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Base schematic spec name to inherit. This is a spec name, not a file path."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title for generated schematic documentation."
+    },
+    "top": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Top VHDL entity for base schematic specs. Inherited specs may omit top."
+    },
+    "flatten": {
+      "type": "boolean",
+      "description": "Whether synthesis should flatten hierarchy."
+    },
+    "include_cell_types": {
+      "$ref": "#/definitions/stringArray",
+      "description": "Regex filters for cell types to keep."
+    },
+    "exclude_cell_types": {
+      "$ref": "#/definitions/stringArray",
+      "description": "Regex filters for cell types to remove."
+    },
+    "include_cell_names": {
+      "$ref": "#/definitions/stringArray",
+      "description": "Regex filters for cell names to keep."
+    },
+    "exclude_cell_names": {
+      "$ref": "#/definitions/stringArray",
+      "description": "Regex filters for cell names to remove."
+    },
+    "include_ports": {
+      "$ref": "#/definitions/stringArray",
+      "description": "Regex filters for top-level ports to keep."
+    },
+    "exclude_ports": {
+      "$ref": "#/definitions/stringArray",
+      "description": "Regex filters for top-level ports to remove."
+    },
+    "include_cell_ports": {
+      "$ref": "#/definitions/stringArray",
+      "description": "Regex filters for nested cell ports to keep."
+    },
+    "exclude_cell_ports": {
+      "$ref": "#/definitions/stringArray",
+      "description": "Regex filters for nested cell ports to remove."
+    },
+    "include_glue_cell_types": {
+      "$ref": "#/definitions/stringArray",
+      "description": "Regex filters for glue cells included around focused paths."
+    },
+    "glue_cell_depth": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Non-negative depth for glue-cell expansion."
+    },
+    "include": {
+      "$ref": "#/definitions/stringArray",
+      "description": "HDL Dev fixture alias for a small include list. Prefer GEnCor-compatible include/exclude fields in project specs."
+    }
+  },
+  "definitions": {
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

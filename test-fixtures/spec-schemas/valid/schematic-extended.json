@@ -1,0 +1,11 @@
+{
+  "name": "timer-core-focus",
+  "extends": "timer-core",
+  "title": "Timer core focus",
+  "include_cell_names": [
+    "u_counter"
+  ],
+  "exclude_ports": [
+    "debug_.*"
+  ]
+}

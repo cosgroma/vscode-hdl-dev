@@ -2,9 +2,10 @@
 
 Issue: <https://github.com/cosgroma/vscode-hdl-dev/issues/13>
 
-This design makes issue `#13` implementation-ready. The goal is editor
-validation and completion for waveform and schematic spec JSON files without
-changing the project Makefile contracts or running workspace code.
+This document records issue `#13` schema contracts, implementation notes, and
+evidence expectations. The goal is editor validation and completion for waveform
+and schematic spec JSON files without changing the project Makefile contracts or
+running workspace code.
 
 ## Goals
 
@@ -76,8 +77,8 @@ names, especially `tb` for waveform testbench selection.
 
 ## File Layout
 
-Use a repo-level schema directory so the files can be referenced from
-`package.json` and tested independently from docs content:
+Schema files live in a repo-level schema directory so they can be referenced
+from `package.json` and tested independently from docs content:
 
 ```text
 schemas/
@@ -85,12 +86,12 @@ schemas/
   schematic-spec.schema.json
 ```
 
-Use JSON Schema draft 2020-12 unless VS Code compatibility requires draft-07
-during implementation testing.
+The implementation uses JSON Schema draft-07 for the broadest VS Code JSON
+language service compatibility.
 
 ## VS Code Contribution
 
-Contribute schema associations in `package.json`:
+The extension contributes schema associations in `package.json`:
 
 ```json
 {
@@ -112,6 +113,22 @@ Contribute schema associations in `package.json`:
 No activation event is required for schema validation. The contribution should
 not apply to generated JSON, package files, `build/schematics/**/*.json`, or
 unrelated workspace JSON.
+
+## Using And Extending The Schemas
+
+Create waveform specs under `docs/waveforms/specs/*.json` and schematic specs
+under `docs/schematics/specs/*.json`. VS Code applies the contributed schemas to
+those files without activating HDL Dev or requiring workspace trust.
+
+The schemas validate JSON shape, required fields, obvious scalar types, and the
+documented fixture aliases. They do not run HDL tools, check signal existence,
+resolve `extends`, or validate regex semantics. Use the existing Make-backed
+generation commands to prove that a spec produces the expected artifact.
+
+When adding or changing supported spec fields, update the matching file under
+`schemas/`, this design document, and the representative fixtures under
+`test-fixtures/spec-schemas/`. Keep aliases explicit so GEnCor-compatible fields
+remain clear.
 
 ## Waveform Schema Contract
 
@@ -199,7 +216,7 @@ Common pitfalls to document in schema descriptions:
 
 ## Validation And Tests
 
-Implementation should include focused automated checks:
+Implementation includes focused automated checks:
 
 - `schemas/*.schema.json` parse as JSON.
 - `package.json` contributes both `jsonValidation` associations with the exact
@@ -210,10 +227,10 @@ Implementation should include focused automated checks:
   obvious types.
 - existing lightweight fixture specs remain valid.
 
-Use a small validation script if the implementation adds a direct schema
-validator dev dependency. If no validator dependency is added, keep automated
-coverage to schema parsing and contribution metadata, then use VS Code UI
-evidence for validation/completion behavior.
+The extension test suite uses `ajv` as a dev dependency to validate the draft-07
+schema contracts directly. VS Code UI evidence is still required before issue
+closure because the automated tests do not inspect editor diagnostics or
+completion UI.
 
 Recommended fixture layout:
 
@@ -241,4 +258,4 @@ Before closing issue `#13`, collect:
   file under `docs/waveforms/specs` or `docs/schematics/specs`.
 - docs link explaining how to use and extend the schemas.
 
-After this design lands, issue `#13` can move from `Needs Design` to `Ready`.
+The design-readiness slice moved issue `#13` from `Needs Design` to `Ready`.

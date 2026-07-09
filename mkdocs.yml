@@ -19,7 +19,7 @@ nav:
       - Overview: plans/README.md
       - Active:
           - Issue 12 Artifact Evidence: plans/active/issue-12-artifact-evidence.md
-          - Issue 13 Spec Schema Design: plans/active/issue-13-spec-schema-design.md
+          - Issue 13 Spec JSON Schemas: plans/active/issue-13-json-schemas.md
           - Issue 30 Agent Harness Structure: plans/active/issue-30-agent-harness-structure.md
       - Completed: plans/completed/README.md
       - Templates:

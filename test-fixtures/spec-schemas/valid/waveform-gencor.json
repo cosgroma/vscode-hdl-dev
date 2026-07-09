@@ -1,0 +1,21 @@
+{
+  "name": "timer-wave",
+  "title": "Timer waveform",
+  "tb": "timer_tb",
+  "stop_time": "20us",
+  "tb_run_args": [
+    "-gperiod=10"
+  ],
+  "time_start": "0ns",
+  "time_end": "120ns",
+  "time_unit": "ns",
+  "signals": [
+    {
+      "path": "/timer_tb/clk",
+      "label": "clk"
+    },
+    {
+      "path": "/timer_tb/rst"
+    }
+  ]
+}

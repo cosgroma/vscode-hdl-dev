@@ -45,6 +45,20 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "jsonValidation": [
+      {
+        "fileMatch": [
+          "**/docs/waveforms/specs/*.json"
+        ],
+        "url": "./schemas/waveform-spec.schema.json"
+      },
+      {
+        "fileMatch": [
+          "**/docs/schematics/specs/*.json"
+        ],
+        "url": "./schemas/schematic-spec.schema.json"
+      }
+    ],
     "commands": [
       {
         "command": "vscode-hdl-dev.generateWaveformSvg",
@@ -309,13 +323,14 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.116.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
-    "typescript-eslint": "^8.56.1",
+    "@types/vscode": "^1.116.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "ajv": "^8.20.0",
     "eslint": "^9.39.3",
     "typescript": "^5.9.3",
-    "@vscode/test-cli": "^0.0.12",
-    "@vscode/test-electron": "^2.5.2"
+    "typescript-eslint": "^8.56.1"
   }
 }

@@ -1,0 +1,9 @@
+{
+  "name": "timer-wave",
+  "tb": "timer_tb",
+  "signals": [
+    {
+      "path": 42
+    }
+  ]
+}
