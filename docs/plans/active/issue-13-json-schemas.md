@@ -41,8 +41,8 @@ Out of scope:
 - [x] Existing lightweight HDL fixture specs validate against the schemas.
 - [x] Local implementation checks pass.
 - [x] Issue evidence comment is updated with implementation evidence.
-- [ ] PR CI URL is attached.
-- [ ] VS Code diagnostics or completion capture is attached.
+- [x] PR CI URL is attached.
+- [x] VS Code diagnostics or completion capture is attached.
 
 ## Decisions
 
@@ -81,9 +81,13 @@ Implementation slice local validation:
 - `make agent-harness-check` passed.
 - Issue evidence comment:
   <https://github.com/cosgroma/vscode-hdl-dev/issues/13#issuecomment-4921316945>
+- PR opened:
+  <https://github.com/cosgroma/vscode-hdl-dev/pull/33>
+- Hosted PR checks are attached through the issue evidence comment:
+  <https://github.com/cosgroma/vscode-hdl-dev/issues/13#issuecomment-4921418791>
+- VS Code schema diagnostic capture is attached through the PR evidence comment:
+  <https://github.com/cosgroma/vscode-hdl-dev/pull/33#issuecomment-4921418802>
 
 Remaining before closure:
 
-- Hosted PR CI URL.
-- VS Code diagnostics or completion capture for a matching spec file.
-- Issue evidence comment summarizing implementation evidence.
+- Maintainer review and acceptance.
