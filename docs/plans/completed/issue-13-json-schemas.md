@@ -90,4 +90,4 @@ Implementation slice local validation:
 
 Remaining before closure:
 
-- Maintainer review and acceptance.
+- Maintainer requested merge and closeout on July 9, 2026.
