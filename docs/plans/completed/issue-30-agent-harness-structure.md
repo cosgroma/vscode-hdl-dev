@@ -38,3 +38,7 @@ from versioned repo-local sources.
 - `make -C test-fixtures/hdl-projects/minimal docs-schematics SCHEMATIC=timer-core` completed.
 - `test-fixtures/hdl-projects/minimal/scripts/deps.sh check ghdl` passed.
 - `test-fixtures/hdl-projects/minimal/scripts/deps.sh check docs-assets` passed.
+
+## Closeout
+
+- Issue `#30` closed after PR `#31` merged.
