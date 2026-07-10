@@ -1,0 +1,7 @@
+{
+  "name": "timer-core",
+  "top": "timer_core",
+  "include": [
+    "timer_core"
+  ]
+}

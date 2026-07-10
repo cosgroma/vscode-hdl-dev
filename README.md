@@ -14,9 +14,8 @@ API, tree views, status items, and focused artifact previews.
 
 Current shipped extension behavior covers the v0.1 Project Discovery and
 Dependency Doctor milestone, the v0.2 native testbench discovery and run
-implementation slices, and the first v0.3 Specs tree and SVG generation
-slices. The first v0.4 Artifact Explorer slice adds passive generated artifact
-discovery and an Artifacts tree.
+implementation slices, the first v0.3 Specs tree and SVG generation slices, the
+v0.4 Artifact Explorer slices, and the first v0.5 spec authoring slice.
 
 Feature status:
 
@@ -41,7 +40,7 @@ Feature status:
 - [x] generated artifact model and Artifacts tree
 - [x] artifact open, reveal, and copy-path actions
 - [ ] latest-artifact command
-- [ ] waveform and schematic JSON schemas
+- [x] waveform and schematic JSON schemas
 - [ ] `ghwdump -H` signal picker for waveform specs
 - [ ] interactive preview surfaces for generated SVGs
 - [ ] packetized-I/O debug session helpers
@@ -202,6 +201,7 @@ Design notes live under `docs/` and are published through MkDocs:
 - [v0.4 Artifact Explorer](docs/workflows/v0.4-artifact-explorer.md)
 - [v0.4 Artifact Explorer Evidence](docs/workflows/v0.4-artifact-explorer-evidence.md)
 - [Project Discovery](docs/design/project-discovery.md)
+- [Spec JSON Schemas](docs/design/spec-json-schemas.md)
 - [Initial Extension Design](docs/design/initial-extension-design.md)
 - [MVP Roadmap](docs/design/mvp-roadmap.md)
 - [CI GHDL Cache Strategy](docs/design/ci-ghdl-cache.md)

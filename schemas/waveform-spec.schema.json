@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://cosgroma.github.io/vscode-hdl-dev/schemas/waveform-spec.schema.json",
+  "title": "HDL Dev waveform spec",
+  "description": "Validates waveform specs under docs/waveforms/specs. The name controls WAVEFORM=<name> and the generated SVG filename.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "signals"
+  ],
+  "anyOf": [
+    {
+      "required": [
+        "tb"
+      ]
+    },
+    {
+      "required": [
+        "testbench"
+      ]
+    }
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Spec identifier. This should match the filename stem and the Make WAVEFORM value."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title for generated waveform documentation."
+    },
+    "tb": {
+      "type": "string",
+      "minLength": 1,
+      "description": "GEnCor-compatible testbench name. Prefer this field over the fixture-only testbench alias."
+    },
+    "testbench": {
+      "type": "string",
+      "minLength": 1,
+      "description": "HDL Dev fixture alias for the testbench name. Prefer tb in project specs."
+    },
+    "stop_time": {
+      "$ref": "#/definitions/timeValue",
+      "description": "GHDL stop time such as 20us."
+    },
+    "tb_run_args": {
+      "type": "array",
+      "description": "Extra Make or GHDL generic arguments, for example -gName=value.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "time_unit": {
+      "type": "string",
+      "description": "Unit used for rendered timing.",
+      "enum": [
+        "fs",
+        "ps",
+        "ns",
+        "us",
+        "ms",
+        "s"
+      ]
+    },
+    "time_start": {
+      "$ref": "#/definitions/timeValue",
+      "description": "Optional waveform crop start such as 0ns."
+    },
+    "time_end": {
+      "$ref": "#/definitions/timeValue",
+      "description": "Optional waveform crop end such as 120ns."
+    },
+    "signals": {
+      "type": "array",
+      "description": "Ordered signal rows to render. Signal paths are not semantically checked by this schema.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Hierarchical signal path such as /timer_tb/clk."
+          },
+          "label": {
+            "type": "string",
+            "description": "Display label for the generated waveform row."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "timeValue": {
+      "type": "string",
+      "pattern": "^[0-9]+(?:\\.[0-9]+)?(?:fs|ps|ns|us|ms|s)$"
+    }
+  }
+}

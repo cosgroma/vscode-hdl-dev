@@ -1,0 +1,35 @@
+{
+  "name": "timer-core",
+  "title": "Timer core",
+  "top": "timer_core",
+  "flatten": false,
+  "include_cell_types": [
+    "^timer_"
+  ],
+  "exclude_cell_types": [
+    "\\$dff"
+  ],
+  "include_cell_names": [
+    "u_counter"
+  ],
+  "exclude_cell_names": [
+    "u_debug"
+  ],
+  "include_ports": [
+    "clk",
+    "rst"
+  ],
+  "exclude_ports": [
+    "debug_.*"
+  ],
+  "include_cell_ports": [
+    "Q"
+  ],
+  "exclude_cell_ports": [
+    "D"
+  ],
+  "include_glue_cell_types": [
+    "\\$mux"
+  ],
+  "glue_cell_depth": 1
+}
