@@ -61,3 +61,9 @@ Local validation:
 - `npm test` passed with 51 tests.
 - `make docs-build` passed with MkDocs strict mode.
 - `make agent-harness-check` passed.
+
+## Closeout
+
+- Issue `#12` closed after PR `#32` merged.
+- Project fields were updated to `Readiness = Done` and
+  `Evidence State = Accepted`.
